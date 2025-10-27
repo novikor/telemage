@@ -31,14 +31,23 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: npm-ci
-        uses: chill-viking/npm-ci@latest
+      - name: Install Node Dependencies
+        run: npm i
 
-      - name: Add Flux Credentials Loaded From ENV
-        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
+#      - name: Add Flux Credentials Loaded From ENV
+#        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: Install Dependencies
-        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Composer Install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.4"
+          version: "2.8"
+          args: "--no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader"
 
       - name: Copy Environment File
         run: cp .env.example .env
