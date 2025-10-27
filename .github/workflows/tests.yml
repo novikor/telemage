@@ -10,8 +10,12 @@ on:
       - develop
       - master
 
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  setup:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +27,6 @@ jobs:
         with:
           php-version: 8.4
           tools: composer:v2
-          coverage: xdebug
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,16 +37,20 @@ jobs:
       - name: Install Node Dependencies
         run: npm i
 
-#      - name: Add Flux Credentials Loaded From ENV
-#        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
+      - name: Load Composer dependencies from cache
+        uses: actions/cache/restore@v4
         with:
-          path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
 
       - name: Composer Install
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Cache Composer dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
 
       - name: Copy Environment File
         run: cp .env.example .env
@@ -59,21 +66,96 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
+      - name: Upload workspace
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace
+          path: |
+            .
+            !node_modules
+            !.git
+          retention-days: 1
+
+  tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace
+          path: .
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          coverage: xdebug
+
       - name: Run Tests
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        if: '!cancelled()'
         run: php artisan test
 
+  pint:
+    needs: setup
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace
+          path: .
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+
       - name: Run Pint
-        if: '!cancelled()'
         run: vendor/bin/pint --test --parallel
 
+  phpstan:
+    needs: setup
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace
+          path: .
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+
       - name: Run Phpstan
-        if: '!cancelled()'
         run: vendor/bin/phpstan analyze
 
+  rector:
+    needs: setup
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace
+          path: .
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+
       - name: Run Rector
-        if: '!cancelled()'
         run: vendor/bin/rector --verbose --dry-run
