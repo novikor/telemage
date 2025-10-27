@@ -1,0 +1,16 @@
+parameters:
+    paths:
+        - app/
+
+    # Level 9 is the highest level
+    level: 5
+
+    ignoreErrors:
+#        - ''
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    editorUrlTitle: '%%relFile%%:%%line%%'
+#
+    excludePaths:
+        - ./tests/**.php
+#
+#    checkMissingIterableValueType: false

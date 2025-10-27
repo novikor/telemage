@@ -1,0 +1,40 @@
+grumphp:
+  extensions:
+    - YieldStudio\GrumPHPLaravelPint\ExtensionLoader
+  fixer:
+    enabled: true
+    fix_by_default: true
+  tasks:
+    rector:
+      config: rector.php
+      triggered_by: [ 'php' ]
+      ignore_patterns: [ ]
+      clear_cache: false
+      no_diffs: false
+    laravel_pint:
+      # These are all optional and have been set to sensible defaults.
+      config: pint.json
+      preset: laravel
+      # Auto fix Laravel Pint issues
+      # Can be false, true, 'run' or 'pre_commit' (default)
+      auto_fix: 'pre_commit'
+      # Auto stage files after auto fix
+      # Can be false, true, 'run' or 'pre_commit' (default)
+      # Works only if the task has been auto fixed (Without GrumPHP having to ask for it)
+      auto_stage: 'pre_commit'
+      triggered_by:
+        - php
+    #      ignore_patterns:
+    #        - /^a-patten-to-ignore-files-or-folders\/.*/
+    phpstan:
+      autoload_file: ~
+      configuration: phpstan.neon
+      level: null
+      force_patterns: [ ]
+      ignore_patterns: [ 'tests', 'blade.php' ]
+      triggered_by: [ 'php' ]
+      memory_limit: "-1"
+      use_grumphp_paths: true
+    shell:
+      scripts:
+        - [ "-c", "./vendor/bin/sail test --stop-on-failure" ]
