@@ -31,14 +31,14 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install Node Dependencies
-        run: npm i
+      - name: npm-ci
+        uses: chill-viking/npm-ci@latest
 
       - name: Add Flux Credentials Loaded From ENV
         run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
 
       - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Copy Environment File
         run: cp .env.example .env
@@ -49,5 +49,26 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
       - name: Run Tests
-        run: ./vendor/bin/pest
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        if: '!cancelled()'
+        run: php artisan test
+
+      - name: Run Pint
+        if: '!cancelled()'
+        run: vendor/bin/pint --test --parallel
+
+      - name: Run Phpstan
+        if: '!cancelled()'
+        run: vendor/bin/phpstan analyze
+
+      - name: Run Rector
+        if: '!cancelled()'
+        run: vendor/bin/rector --verbose --dry-run
