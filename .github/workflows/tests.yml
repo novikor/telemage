@@ -43,11 +43,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Composer Install
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.4"
-          version: "2.8"
-          args: "--no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader"
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Copy Environment File
         run: cp .env.example .env
