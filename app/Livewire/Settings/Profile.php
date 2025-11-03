@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace App\Livewire\Settings;
 
 use App\Models\User;
+use Filament\Auth\Pages\EditProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
-class Profile extends Component
+class Profile extends EditProfile
 {
     public string $name = '';
 
     public string $email = '';
+
+    protected string $view = 'livewire/settings/profile';
 
     /**
      * Mount the component.
