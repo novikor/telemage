@@ -1,5 +1,4 @@
-<x-layouts.app.sidebar :title="$title ?? null">
-    <flux:main>
+<x-filament-panels::layout.index>
         {{ $slot }}
-    </flux:main>
-</x-layouts.app.sidebar>
+</x-filament-panels::layout.index>
+

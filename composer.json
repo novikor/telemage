@@ -3,13 +3,11 @@
     "name": "laravel/livewire-starter-kit",
     "type": "project",
     "description": "The official Laravel starter kit for Livewire.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
+    "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "filament/filament": "^4.0",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
@@ -30,6 +28,7 @@
         "phpro/grumphp": "^2.17",
         "phpstan/extension-installer": "^1.4",
         "rector/rector": "^2.2",
+        "spatie/laravel-ignition": "^2.9",
         "yieldstudio/grumphp-laravel-pint": "^1.0"
     },
     "autoload": {
@@ -63,7 +62,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
