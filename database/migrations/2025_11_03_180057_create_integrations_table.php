@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('integrations', function (Blueprint $table): void {
             $table->id();
+            $table->softDeletes();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
             $table->string('bot_token')->nullable();
             $table->string('magento_base_url')->nullable();
             $table->string('store_code')->nullable();
-            $table->text('jwe_token')->nullable();
+            $table->text('jwe_secret')->nullable();
             $table->timestamps();
         });
     }
