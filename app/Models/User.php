@@ -61,6 +61,10 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|User withoutTrashed()
  *
+ * @property Carbon|null $deleted_at
+ *
+ * @method static Builder<static>|User whereDeletedAt($value)
+ *
  * @mixin Eloquent
  */
 class User extends Authenticatable implements FilamentUser
