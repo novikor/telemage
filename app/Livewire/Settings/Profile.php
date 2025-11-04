@@ -17,7 +17,7 @@ class Profile extends EditProfile
 
     public string $email = '';
 
-    protected string $view = 'livewire/settings/profile';
+    protected string $view = 'livewire.settings.profile';
 
     /**
      * Mount the component.
