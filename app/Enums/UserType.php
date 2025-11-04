@@ -7,7 +7,7 @@ namespace App\Enums;
 enum UserType: string
 {
     case ADMIN = 'admin';
-    case STORE_OWNER = 'store_owner';
+    case MERCHANT = 'merchant';
 
     public function isAdmin(): bool
     {
