@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\ScopedByUser;
+use App\Observers\IntegrationObserver;
 use Database\Factories\IntegrationFactory;
 use Eloquent;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $magento_base_url
  * @property string|null $store_code
  * @property string|null $jwe_secret
+ * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User $user
@@ -41,17 +44,21 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Integration whereTitle($value)
  * @method static IntegrationFactory factory($count = null, $state = [])
  * @method static Builder<static>|Integration ofUser(Authenticatable $user)
- *
- * @property string|null $deleted_at
- *
  * @method static Builder<static>|Integration whereDeletedAt($value)
  * @method static Builder<static>|Integration whereJweSecret($value)
  * @method static Builder<static>|Integration onlyTrashed()
  * @method static Builder<static>|Integration withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Integration withoutTrashed()
  *
+ * @property string|null $webhook_token
+ * @property bool $webhook_is_configured
+ *
+ * @method static Builder<static>|Integration whereWebhookIsConfigured($value)
+ * @method static Builder<static>|Integration whereWebhookToken($value)
+ *
  * @mixin Eloquent
  */
+#[ObservedBy(IntegrationObserver::class)]
 class Integration extends Model
 {
     use HasFactory;
@@ -65,12 +72,16 @@ class Integration extends Model
         'magento_base_url',
         'store_code',
         'jwe_secret',
+        'webhook_is_configured',
+        'webhook_status',
     ];
 
     protected function casts(): array
     {
         return [
             'jwe_secret' => 'encrypted',
+            'bot_token' => 'encrypted',
+            'webhook_is_configured' => 'boolean',
         ];
     }
 
