@@ -46,7 +46,7 @@ class CreateIntegration extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        if (blank($data['user_id']) && ! auth()->user()->type->isAdmin()) {
+        if (empty($data['user_id']) && ! auth()->user()->type->isAdmin()) {
             $data['user_id'] = auth()->id();
         }
 
@@ -54,10 +54,5 @@ class CreateIntegration extends CreateRecord
             ...$data,
             'jwe_secret' => Str::random(64),
         ];
-    }
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
     }
 }

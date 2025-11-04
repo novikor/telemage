@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table): void {
-            $table->enum('type', array_column(UserType::cases(), 'value'))->nullable()->default(UserType::STORE_OWNER->value)->after('email');
+            $table->enum('type', array_column(UserType::cases(), 'value'))->nullable()->default(UserType::MERCHANT->value)->after('email');
         });
     }
 
