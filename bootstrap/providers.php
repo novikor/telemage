@@ -6,10 +6,12 @@ use App\Providers\AppServiceProvider;
 use App\Providers\Filament\DashboardPanelProvider;
 use App\Providers\FilamentServiceProvider;
 use App\Providers\FortifyServiceProvider;
+use App\Providers\TelegramBotApiProvider;
 
 return [
     AppServiceProvider::class,
     FilamentServiceProvider::class,
     DashboardPanelProvider::class,
     FortifyServiceProvider::class,
+    TelegramBotApiProvider::class,
 ];
