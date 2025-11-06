@@ -6,16 +6,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\TelegramBotApiService;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use SergiX44\Nutgram\RunningMode\Webhook;
 use Throwable;
 
 class TelegramWebhookController extends Controller
 {
     /**
      * Handle incoming Telegram webhook requests.
+     *
+     * @throws BindingResolutionException
      */
-    public function handle(TelegramBotApiService $botApiService, string $token)
+    public function handle(TelegramBotApiService $botApiService, string $token): Response
     {
         $bot = $botApiService->initializeBotInstance($token);
         try {
