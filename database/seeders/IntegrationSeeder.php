@@ -17,7 +17,7 @@ class IntegrationSeeder extends Seeder
     public function run(): void
     {
         User::query()->where('type', UserType::MERCHANT)->each(function (User $user): void {
-            Integration::factory()->count(4)->create([
+            Integration::factory()->count(2)->create([
                 'user_id' => $user->id,
             ]);
         });

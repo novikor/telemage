@@ -38,6 +38,7 @@ class CreateUser extends CreateRecord
         ];
     }
 
+    #[\Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['type'] = UserType::MERCHANT;
@@ -49,6 +50,7 @@ class CreateUser extends CreateRecord
         return $data;
     }
 
+    #[\Override]
     protected function handleRecordCreation(array $data): User
     {
         /** @var User $user */
@@ -60,6 +62,7 @@ class CreateUser extends CreateRecord
         return $user;
     }
 
+    #[\Override]
     protected function getCreatedNotificationTitle(): ?string
     {
         return 'Merchant registered, password creation link sent';

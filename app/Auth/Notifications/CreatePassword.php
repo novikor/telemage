@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Lang;
 
 class CreatePassword extends ResetPassword
 {
+    #[\Override]
     protected function buildMailMessage($url): MailMessage
     {
         return (new MailMessage)
