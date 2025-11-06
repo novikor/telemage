@@ -44,6 +44,7 @@ class CreateIntegration extends CreateRecord
         ];
     }
 
+    #[\Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         if (empty($data['user_id']) && ! auth()->user()->type->isAdmin()) {

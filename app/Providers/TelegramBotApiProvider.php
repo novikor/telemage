@@ -13,6 +13,7 @@ class TelegramBotApiProvider extends ServiceProvider
     /**
      * Register services.
      */
+    #[\Override]
     public function register(): void {}
 
     /**

@@ -11,9 +11,11 @@ use Eloquent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -56,6 +58,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Integration whereWebhookIsConfigured($value)
  * @method static Builder<static>|Integration whereWebhookToken($value)
  *
+ * @property-read Collection<int, TelegramUser> $telegramUsers
+ * @property-read int|null $telegram_users_count
+ *
  * @mixin Eloquent
  */
 #[ObservedBy(IntegrationObserver::class)]
@@ -88,5 +93,10 @@ class Integration extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function telegramUsers(): HasMany
+    {
+        return $this->hasMany(TelegramUser::class);
     }
 }

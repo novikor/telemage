@@ -22,6 +22,7 @@ class Profile extends EditProfile
     /**
      * Mount the component.
      */
+    #[\Override]
     public function mount(): void
     {
         $this->name = Auth::user()->name;

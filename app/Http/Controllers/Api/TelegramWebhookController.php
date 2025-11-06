@@ -28,6 +28,12 @@ class TelegramWebhookController extends Controller
                 'integration' => $bot->get('integration')?->id,
                 'user' => $bot->get('user')?->id,
             ]);
+            if (app()->isLocal() && app()->hasDebugModeEnabled()) {
+                $bot->sendMessage($e->getMessage());
+
+                return response()->noContent();
+            }
+            $bot->sendMessage('Something went wrong. Please try again later.');
             abort(500);
         }
     }

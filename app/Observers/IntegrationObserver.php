@@ -48,6 +48,7 @@ class IntegrationObserver
 
                 // Set the webhook with Telegram
                 $bot->setWebhook($webhookUrl);
+                $bot->registerMyCommands();
 
                 // Update the status (use saveQuietly to avoid firing 'saved' event again)
                 $integration->webhook_is_configured = true;
