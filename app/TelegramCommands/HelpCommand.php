@@ -16,7 +16,7 @@ class HelpCommand
         $bot->registerMyCommands();
         $commands = $bot->getMyCommands();
         $integration = $this->getIntegration($bot);
-        $message = "Hello there! It's a bot for quick and save interaction with {$integration->title} store.".
+        $message = "Hello there! It's a bot for quick and safe interaction with {$integration->title} store.".
             "\nA List of available commands:\n\n";
         foreach ($commands as $command) {
             $message .= "/$command->command: $command->description\n";

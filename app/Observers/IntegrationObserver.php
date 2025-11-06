@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\Integration;
+use App\Services\TelegramBotApiService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use SergiX44\Nutgram\Nutgram;
+use Throwable;
 
-class IntegrationObserver
+readonly class IntegrationObserver
 {
+    public function __construct(
+        private TelegramBotApiService $botApiService,
+    ) {}
+
     /**
      * Handle the Integration "creating" event.
      * This fires *before* the record is created.
@@ -37,8 +42,7 @@ class IntegrationObserver
         ) {
             // TODO: extract into action or service
             try {
-                // Create a new Nutgram instance ONLY for this bot
-                $bot = new Nutgram($integration->bot_token);
+                $bot = $this->botApiService->initializeBotInstance($integration->bot_token);
 
                 // Generate the full, secure webhook URL using our named route
                 $webhookUrl = route('telegram.webhook', ['token' => $integration->webhook_token]);
@@ -54,7 +58,7 @@ class IntegrationObserver
                 $integration->webhook_is_configured = true;
                 $integration->saveQuietly();
 
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // If the token is invalid or Telegram API fails
                 Log::error('Failed to set webhook for integration '.$integration->id, ['error' => $e]);
 

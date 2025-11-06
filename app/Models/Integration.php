@@ -78,7 +78,7 @@ class Integration extends Model
         'store_code',
         'jwe_secret',
         'webhook_is_configured',
-        'webhook_status',
+
     ];
 
     protected function casts(): array

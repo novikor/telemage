@@ -18,11 +18,15 @@ class LoginCommand
         $integration = $this->getIntegration($bot);
         $customerId = $jweService->validateAndGetCustomerId($integration, $token);
 
-        TelegramUser::query()->updateOrCreate([
-            'integration_id' => $integration->id,
-            'chat_id' => $bot->chatId(),
-            'customer_id' => $customerId,
-        ]);
+        TelegramUser::query()->updateOrCreate(
+            attributes: [
+                'integration_id' => $integration->id,
+                'chat_id' => $bot->chatId(),
+            ],
+            values: [
+                'customer_id' => $customerId,
+            ]
+        );
 
         $bot->sendMessage('Account successfully linked!');
     }

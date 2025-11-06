@@ -82,7 +82,6 @@ readonly class JweService
             Log::error('JWE decoding failed', [
                 'error' => $e,
                 'integration_id' => $integration->id,
-                'token' => $token,
             ]);
             throw new InvalidArgumentException('JWE Decoding Failure: unable to decode or verify token', $e->getCode(), $e);
         }
