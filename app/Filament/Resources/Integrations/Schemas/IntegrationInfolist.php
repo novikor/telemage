@@ -26,6 +26,7 @@ class IntegrationInfolist
                 ]),
                 Section::make('API')->schema([
                     IconEntry::make('webhook_is_configured')->boolean()->label(fn ($state) => $state ? 'Webhook is configured' : 'Webhook is not configured'),
+                    TextEntry::make('webhook_token')->label('Webhook URL Token')->copyable()->copyMessage('Copied!'),
                     TextEntry::make('jwe_secret')->label('JWE Secret')->copyable()->copyMessage('Copied!'),
                 ]),
             ]);
