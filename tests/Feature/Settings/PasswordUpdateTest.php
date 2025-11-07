@@ -12,7 +12,7 @@ test('password can be updated', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->actingAs($user);
+    test()->actingAs($user);
 
     $response = Livewire::test(Password::class)
         ->set('current_password', 'password')
@@ -30,7 +30,7 @@ test('correct password must be provided to update password', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->actingAs($user);
+    test()->actingAs($user);
 
     $response = Livewire::test(Password::class)
         ->set('current_password', 'wrong-password')

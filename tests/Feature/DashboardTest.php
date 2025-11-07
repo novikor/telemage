@@ -5,11 +5,11 @@ declare(strict_types=1);
 use App\Models\User;
 
 test('guests are redirected to the login page', function () {
-    $this->get('/')->assertRedirect('/auth/login');
+    test()->get('/')->assertRedirect('/auth/login');
 });
 
 test('authenticated users can visit the dashboard', function () {
-    $this->actingAs($user = User::factory()->create());
+    test()->actingAs($user = User::factory()->create());
 
-    $this->get('/')->assertStatus(200);
+    test()->get('/')->assertStatus(200);
 });

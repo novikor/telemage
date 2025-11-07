@@ -33,41 +33,41 @@ function generateTokenWithPayload(Integration $integration, array $payload): str
 }
 
 beforeEach(function () {
-    $this->jweService = new JweService;
-    $this->integration = Integration::factory()->create();
+    test()->jweService = new JweService;
+    test()->integration = Integration::factory()->create();
 });
 
 it('generates a valid jwe token', function () {
     $customerId = 123;
-    $token = $this->jweService->generateForCustomer($this->integration, $customerId);
+    $token = test()->jweService->generateForCustomer(test()->integration, $customerId);
     expect($token)->toBeString();
 });
 
 it('can validate a jwe token and return the customer id', function () {
     $customerId = 123;
-    $token = $this->jweService->generateForCustomer($this->integration, $customerId);
-    $retrievedCustomerId = $this->jweService->validateAndGetCustomerId($this->integration, $token);
+    $token = test()->jweService->generateForCustomer(test()->integration, $customerId);
+    $retrievedCustomerId = test()->jweService->validateAndGetCustomerId(test()->integration, $token);
     expect($retrievedCustomerId)->toBe($customerId);
 });
 
 it('throws an exception for an expired token', function () {
     $customerId = 123;
-    $token = $this->jweService->generateForCustomer($this->integration, $customerId);
+    $token = test()->jweService->generateForCustomer(test()->integration, $customerId);
 
     // Travel 6 minutes into the future
-    $this->travel(6)->minutes();
+    test()->travel(6)->minutes();
 
-    $this->jweService->validateAndGetCustomerId($this->integration, $token);
+    test()->jweService->validateAndGetCustomerId(test()->integration, $token);
 })->throws(InvalidArgumentException::class, 'JWE Decoding Failure: unable to decode or verify token');
 
 it('throws an exception for a token with an invalid signature', function () {
     $customerId = 123;
-    $token = $this->jweService->generateForCustomer($this->integration, $customerId);
+    $token = test()->jweService->generateForCustomer(test()->integration, $customerId);
 
     // Create another integration with a different secret
     $anotherIntegration = Integration::factory()->create();
 
-    $this->jweService->validateAndGetCustomerId($anotherIntegration, $token);
+    test()->jweService->validateAndGetCustomerId($anotherIntegration, $token);
 })->throws(InvalidArgumentException::class, 'JWE Decoding Failure: unable to decode or verify token');
 
 it('throws an exception when customer_id is missing from payload', function () {
@@ -77,7 +77,7 @@ it('throws an exception when customer_id is missing from payload', function () {
         'exp' => now()->addMinutes(5)->timestamp,
     ];
 
-    $token = generateTokenWithPayload($this->integration, $payload);
+    $token = generateTokenWithPayload(test()->integration, $payload);
 
-    $this->jweService->validateAndGetCustomerId($this->integration, $token);
+    test()->jweService->validateAndGetCustomerId(test()->integration, $token);
 })->throws(InvalidArgumentException::class, 'JWE Decoding Failure: missing customer_id');

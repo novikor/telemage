@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Telegram;
 
 use App\Http\Controllers\Controller;
 use App\Services\TelegramBotApiService;
@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class TelegramWebhookController extends Controller
+class WebhookController extends Controller
 {
     /**
      * Handle incoming Telegram webhook requests.
