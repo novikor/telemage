@@ -8,7 +8,7 @@ use Livewire\Livewire;
 
 beforeEach(function () {
     if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
+        test()->markTestSkipped('Two-factor authentication is not enabled.');
     }
 
     Features::twoFactorAuthentication([
@@ -20,7 +20,7 @@ beforeEach(function () {
 test('two factor settings page can be rendered', function () {
     $user = User::factory()->withoutTwoFactor()->create();
 
-    $this->actingAs($user)
+    test()->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'))
         ->assertOk()
@@ -31,7 +31,7 @@ test('two factor settings page can be rendered', function () {
 test('two factor settings page requires password confirmation when enabled', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = test()->actingAs($user)
         ->get(route('two-factor.show'));
 
     $response->assertRedirect(route('password.confirm'));
@@ -42,7 +42,7 @@ test('two factor settings page returns forbidden response when two factor is dis
 
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = test()->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'));
 
@@ -58,13 +58,13 @@ test('two factor authentication disabled when confirmation abandoned between req
         'two_factor_confirmed_at' => null,
     ])->save();
 
-    $this->actingAs($user);
+    test()->actingAs($user);
 
     $component = Livewire::test('settings.two-factor');
 
     $component->assertSet('twoFactorEnabled', false);
 
-    $this->assertDatabaseHas('users', [
+    test()->assertDatabaseHas('users', [
         'id' => $user->id,
         'two_factor_secret' => null,
         'two_factor_recovery_codes' => null,
