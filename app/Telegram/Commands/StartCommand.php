@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Telegram\Commands;
 
-use App\Services\Magento\Customer\GetCustomerData;
+use App\Services\Api\Magento\CustomerService;
 use App\Telegram\Commands\Traits\ExtractsRequestData;
 use SergiX44\Nutgram\Nutgram;
 
@@ -12,10 +12,10 @@ class StartCommand
 {
     use ExtractsRequestData;
 
-    public function __invoke(Nutgram $bot, GetCustomerData $getCustomer): void
+    public function __invoke(Nutgram $bot, CustomerService $service): void
     {
         $telegramUser = $this->getTelegramUser($bot);
-        if ($telegramUser && $magentoCustomer = $getCustomer($telegramUser)) {
+        if ($telegramUser && $magentoCustomer = $service->getCustomerData($telegramUser)) {
             $bot->sendMessage(
                 sprintf(
                     "Welcome back, %s %s!\nYou are logged in as %s.",
