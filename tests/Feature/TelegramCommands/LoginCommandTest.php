@@ -8,7 +8,7 @@ use App\Models\Integration;
 use App\Models\TelegramUser;
 use App\Services\JweService;
 use App\Services\ReferralIdStorageService;
-use App\TelegramCommands\LoginCommand;
+use App\Telegram\Commands\LoginCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use InvalidArgumentException;

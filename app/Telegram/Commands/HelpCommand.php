@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\TelegramCommands;
+namespace App\Telegram\Commands;
 
-use App\TelegramCommands\Traits\ExtractsRequestData;
+use App\Telegram\Commands\Traits\ExtractsRequestData;
 use SergiX44\Nutgram\Nutgram;
+use SergiX44\Nutgram\Telegram\Types\Command\BotCommandScopeAllPrivateChats;
 
 class HelpCommand
 {
@@ -14,7 +15,7 @@ class HelpCommand
     public function __invoke(Nutgram $bot): void
     {
         $bot->registerMyCommands();
-        $commands = $bot->getMyCommands();
+        $commands = $bot->getMyCommands(new BotCommandScopeAllPrivateChats);
         $integration = $this->getIntegration($bot);
         $message = "Hello there! It's a bot for quick and safe interaction with {$integration->title} store.".
             "\nA List of available commands:\n\n";

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\TelegramCommands;
+namespace App\Telegram\Commands;
 
 use App\Models\TelegramUser;
 use App\Services\JweService;
 use App\Services\ReferralIdStorageService;
-use App\TelegramCommands\Traits\ExtractsRequestData;
+use App\Telegram\Commands\Traits\ExtractsRequestData;
 use SergiX44\Nutgram\Nutgram;
 
 class LoginCommand
