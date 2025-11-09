@@ -6,7 +6,7 @@ namespace App\Telegram\Commands;
 
 use App\Api\Magento\Data\Response\Customer;
 use App\Models\TelegramUser;
-use App\Services\Magento\Customer\GetCustomerData;
+use App\Services\Api\Magento\CustomerService;
 use App\Telegram\Commands\Traits\ExtractsRequestData;
 use SergiX44\Nutgram\Nutgram;
 use SergiX44\Nutgram\Telegram\Properties\ParseMode;
@@ -15,11 +15,11 @@ class MeCommand
 {
     use ExtractsRequestData;
 
-    public function __invoke(Nutgram $bot, GetCustomerData $getCustomer): void
+    public function __invoke(Nutgram $bot, CustomerService $service): void
     {
-        $customer = $this->getTelegramUser($bot);
+        $telegramUser = $this->getTelegramUser($bot);
 
-        if (! $customer instanceof TelegramUser) {
+        if (! $telegramUser instanceof TelegramUser) {
             $bot->sendMessage(
                 sprintf(
                     'You are not logged in. To connect your account, please log in on %s and click the \'Connect Telegram\' button.',
@@ -30,7 +30,7 @@ class MeCommand
             return;
         }
 
-        $magentoCustomer = ($getCustomer)($customer);
+        $magentoCustomer = $service->getCustomerData($telegramUser);
 
         if (! $magentoCustomer instanceof Customer) {
             $bot->sendMessage('Sorry, I could not retrieve your account details at this time.');

@@ -7,6 +7,7 @@ use App\Providers\Filament\DashboardPanelProvider;
 use App\Providers\FilamentServiceProvider;
 use App\Providers\FortifyServiceProvider;
 use App\Providers\TelegramBotApiProvider;
+use App\Providers\TelescopeServiceProvider;
 
 return [
     AppServiceProvider::class,
@@ -14,4 +15,5 @@ return [
     DashboardPanelProvider::class,
     FortifyServiceProvider::class,
     TelegramBotApiProvider::class,
+    TelescopeServiceProvider::class,
 ];

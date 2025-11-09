@@ -26,7 +26,7 @@ readonly class GetCustomerTokenByJWE
             return $this->requestToken($integration, $jwe);
         } catch (RequestException  $e) {
             Log::error($e->__toString(), ['integration_id' => $integration->id]);
-            throw new ApiException($e->response->json('message'), 0, $e);
+            throw new ApiException($e->response->json('message', ''), 0, $e);
         }
     }
 
