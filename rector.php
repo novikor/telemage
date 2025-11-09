@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Rector\ProtectedGetterToProtectedSetPropertyRector;
 use Rector\Config\RectorConfig;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -15,6 +16,7 @@ use RectorLaravel\Set\Packages\Livewire\LivewireSetList;
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/app',
+        __DIR__.'/dev',
     ])
     ->withSkipPath(__DIR__.'/tests')
     ->withSets([
@@ -29,6 +31,9 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_COLLECTION,
         LaravelSetList::LARAVEL_ELOQUENT_MAGIC_METHOD_TO_QUERY_BUILDER,
+    ])
+    ->withRules([
+        ProtectedGetterToProtectedSetPropertyRector::class,
     ])
     ->withSkip([
         ReturnBinaryOrToEarlyReturnRector::class,

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Telegram\Commands;
 
-use App\Api\Magento\Data\Response\Customer;
+use App\Api\ApiException;
 use App\Models\TelegramUser;
 use App\Services\Api\Magento\CustomerService;
 use App\Telegram\Commands\Traits\ExtractsRequestData;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Log;
 use SergiX44\Nutgram\Nutgram;
 use SergiX44\Nutgram\Telegram\Properties\ParseMode;
 
@@ -30,10 +32,11 @@ class MeCommand
             return;
         }
 
-        $magentoCustomer = $service->getCustomerData($telegramUser);
-
-        if (! $magentoCustomer instanceof Customer) {
-            $bot->sendMessage('Sorry, I could not retrieve your account details at this time.');
+        try {
+            $magentoCustomer = $service->getCustomerData($telegramUser);
+        } catch (ApiException|ConnectionException $e) {
+            Log::error($e->__toString());
+            $bot->sendMessage('Sorry, we could not retrieve your account details at this time.');
 
             return;
         }

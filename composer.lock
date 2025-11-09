@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0ca23cf6f1e9f95528fbd7ca909aabe",
+    "content-hash": "4b3264fde1ece89fc91459d8a951c5c2",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -10959,6 +10959,67 @@
             "time": "2025-08-08T12:00:00+00:00"
         },
         {
+            "name": "fo3nix/php-graphql-oqm",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Fo3nix/php-graphql-oqm.git",
+                "reference": "82092e230aa9aff60c20c1d0b1dc69ec866b1f62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Fo3nix/php-graphql-oqm/zipball/82092e230aa9aff60c20c1d0b1dc69ec866b1f62",
+                "reference": "82092e230aa9aff60c20c1d0b1dc69ec866b1f62",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.67 | ^3.10",
+                "pavel-paliy/php-graphql-client": "^1.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "phpunit/phpunit": "^7.5|^9"
+            },
+            "bin": [
+                "bin/generate_schema_objects"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/",
+                    "GraphQL\\SchemaObject\\": "schema_object/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fo3nix",
+                    "email": "finn.dev@ofeastwood.com"
+                }
+            ],
+            "description": "GraphQL Object-to-Query Mapper (OQM) which generates objects AND typed data models from an API schema.",
+            "keywords": [
+                "builder",
+                "generator",
+                "graph-ql",
+                "graphql",
+                "object",
+                "object-mapper",
+                "php",
+                "query",
+                "query-builder",
+                "query-generator"
+            ],
+            "support": {
+                "source": "https://github.com/Fo3nix/php-graphql-oqm/tree/v1.0.1"
+            },
+            "time": "2025-09-16T11:15:16+00:00"
+        },
+        {
             "name": "gitonomy/gitlib",
             "version": "v1.5.0",
             "source": {
@@ -11856,6 +11917,70 @@
                 "source": "https://github.com/OndraM/ci-detector/tree/4.2.0"
             },
             "time": "2024-03-12T13:22:30+00:00"
+        },
+        {
+            "name": "pavel-paliy/php-graphql-client",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PavelPaliy/php-graphql-client.git",
+                "reference": "0bced8771f5f3fdb9e5bf8f31cf118f27765c44a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PavelPaliy/php-graphql-client/zipball/0bced8771f5f3fdb9e5bf8f31cf118f27765c44a",
+                "reference": "0bced8771f5f3fdb9e5bf8f31cf118f27765c44a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.5.0",
+                "php": "^7.1 || ^8.3",
+                "psr/http-client": "^1.0",
+                "psr/http-message": "^1.0 || ^2.0"
+            },
+            "conflict": {
+                "guzzlehttp/psr7": "< 1.7.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^3.186",
+                "codacy/coverage": "^1.4",
+                "phpunit/phpunit": "^7.5|^8.0|^9.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Move this package to require section to use AWS IAM authorization",
+                "gmostafa/php-graphql-oqm": "To have object-to-query mapping support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pavel Palii",
+                    "email": "paliipavel@gmail.com"
+                }
+            ],
+            "description": "GraphQL client and query builder (fork of gmostafa/php-graphql-client, because this library outdated).",
+            "keywords": [
+                "builder",
+                "client",
+                "graph-ql",
+                "graphql",
+                "php",
+                "query",
+                "query-builder"
+            ],
+            "support": {
+                "source": "https://github.com/PavelPaliy/php-graphql-client/tree/v1.0"
+            },
+            "time": "2024-10-13T13:55:27+00:00"
         },
         {
             "name": "pestphp/pest",
