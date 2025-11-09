@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Override;
 
 /**
  * @property int $id
@@ -89,12 +88,6 @@ class Integration extends Model
             'bot_token' => 'encrypted',
             'webhook_is_configured' => 'boolean',
         ];
-    }
-
-    #[Override]
-    public function getRouteKeyName(): string
-    {
-        return 'webhook_token';
     }
 
     public function user(): BelongsTo

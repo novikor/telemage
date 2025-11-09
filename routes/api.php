@@ -9,5 +9,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('/telegram/webhook/{token}', [WebhookController::class, 'handle'])
     ->name('telegram.webhook');
 
-Route::post('magento/login/referral/{integration}', StoreLoginReferralId::class)
+Route::post('magento/login/referral/{integration:webhook_token}', StoreLoginReferralId::class)
     ->name('telegram.magento.login.referral.store');

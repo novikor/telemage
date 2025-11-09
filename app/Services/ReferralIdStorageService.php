@@ -13,7 +13,7 @@ class ReferralIdStorageService
 
     private const string CACHE_KEY_PATTERN = 'referral_%d_%s';
 
-    public function store(Integration $integration, string $referralId, string $jwe): void
+    public function store(Integration $integration, #[\SensitiveParameter] string $referralId, #[\SensitiveParameter] string $jwe): void
     {
         Cache::put(
             key: $this->getKey($integration, $referralId),
@@ -22,7 +22,7 @@ class ReferralIdStorageService
         );
     }
 
-    public function pull(Integration $integration, string $referralId): ?string
+    public function pull(Integration $integration, #[\SensitiveParameter] string $referralId): ?string
     {
         return Cache::pull(
             key: $this->getKey($integration, $referralId)
