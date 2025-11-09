@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\Api\Magento;
 
 use App\Api\ApiException;
-use App\Api\Magento\Actions\GetCustomerTokenByJWE;
-use App\Api\Magento\Utils\JWTParser;
+use App\Api\Magento\Rest\Actions\GetCustomerTokenByJWE;
+use App\Api\Magento\Rest\Utils\JWTParser;
 use App\Models\TelegramUser;
 use App\Services\JweService;
 use Illuminate\Http\Client\ConnectionException;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\Api\Magento;
 
 use App\Api\ApiException;
-use App\Api\Magento\Actions\GetMe;
-use App\Api\Magento\Data\Response\Customer;
+use App\Api\Magento\Rest\Actions\GetMe;
+use App\Api\Magento\Rest\Data\Customer;
 use App\Models\TelegramUser;
 use Illuminate\Http\Client\ConnectionException;
 
