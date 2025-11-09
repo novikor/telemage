@@ -67,6 +67,13 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'telegram_api_debug' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/telegram_api_debug.log'),
+            'level' => 'debug',
+            'replace_placeholders' => true,
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

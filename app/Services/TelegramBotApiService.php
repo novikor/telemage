@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Integration;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Psr\SimpleCache\CacheInterface;
 use SergiX44\Nutgram\Configuration;
 use SergiX44\Nutgram\Nutgram;
@@ -27,6 +28,7 @@ class TelegramBotApiService
             'config' => new Configuration(
                 container: app(),
                 cache: app(CacheInterface::class),
+                logger: Log::channel('telegram_api_debug')
             ),
         ]);
         $bot->setRunningMode(Webhook::class);

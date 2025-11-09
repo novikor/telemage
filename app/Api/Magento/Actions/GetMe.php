@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Api\Magento\Actions;
 
 use App\Api\ApiException;
+use App\Api\Magento\Data\Response\Customer;
 use App\Api\Magento\Traits\CallsMagentoRestAPI;
 use App\Models\Integration;
 use Illuminate\Http\Client\ConnectionException;
@@ -20,7 +21,7 @@ class GetMe
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function __invoke(Integration $integration, #[SensitiveParameter] string $customerToken): string
+    public function __invoke(Integration $integration, #[SensitiveParameter] string $customerToken): Customer
     {
         try {
             return $this->getMe($integration, $customerToken);
@@ -35,12 +36,13 @@ class GetMe
      * @throws ApiException
      * @throws ConnectionException
      */
-    private function getMe(Integration $integration, string $customerToken): string
+    private function getMe(Integration $integration, string $customerToken): Customer
     {
         $response = $this->call($integration)
             ->withHeader('Authorization', 'Bearer '.$customerToken)
-            ->get('V1/customers/me');
+            ->get('V1/customers/me')
+            ->throw();
 
-        return $response->json();
+        return Customer::fromArray($response->json());
     }
 }
