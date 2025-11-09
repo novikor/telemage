@@ -54,7 +54,7 @@ readonly class JweService
         return (new CompactSerializer)->serialize($jwe, 0);
     }
 
-    public function validateAndGetCustomerId(Integration $integration, string $token): int
+    public function validateAndGetCustomerId(Integration $integration, #[\SensitiveParameter] string $token): int
     {
         $jwk = $this->getJWK($integration);
         $decrypter = new JWEDecrypter($this->getAlgorithmManager());
