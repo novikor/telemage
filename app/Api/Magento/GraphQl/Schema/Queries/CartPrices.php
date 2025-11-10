@@ -6,10 +6,12 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CartPrices
 {
+    /** @var CartTaxItem[] */
     public protected(set) ?array $applied_taxes = null;
 
     public protected(set) ?CartDiscount $discount = null;
 
+    /** @var Discount[] */
     public protected(set) ?array $discounts = null;
 
     public protected(set) ?Money $grand_total = null;
@@ -25,10 +27,10 @@ class CartPrices
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['applied_taxes']) && $data['applied_taxes'] !== null) {
+        if (isset($data['applied_taxes'])) {
             $instance->applied_taxes = array_map(CartTaxItem::fromArray(...), $data['applied_taxes']);
         }
-        if (isset($data['discount']) && $data['discount'] !== null) {
+        if (isset($data['discount'])) {
             $instance->discount = CartDiscount::fromArray($data['discount']);
         }
         if (isset($data['discounts'])) {
@@ -37,16 +39,16 @@ class CartPrices
         if (isset($data['grand_total'])) {
             $instance->grand_total = Money::fromArray($data['grand_total']);
         }
-        if (isset($data['grand_total_excluding_tax']) && $data['grand_total_excluding_tax'] !== null) {
+        if (isset($data['grand_total_excluding_tax'])) {
             $instance->grand_total_excluding_tax = Money::fromArray($data['grand_total_excluding_tax']);
         }
-        if (isset($data['subtotal_excluding_tax']) && $data['subtotal_excluding_tax'] !== null) {
+        if (isset($data['subtotal_excluding_tax'])) {
             $instance->subtotal_excluding_tax = Money::fromArray($data['subtotal_excluding_tax']);
         }
-        if (isset($data['subtotal_including_tax']) && $data['subtotal_including_tax'] !== null) {
+        if (isset($data['subtotal_including_tax'])) {
             $instance->subtotal_including_tax = Money::fromArray($data['subtotal_including_tax']);
         }
-        if (isset($data['subtotal_with_discount_excluding_tax']) && $data['subtotal_with_discount_excluding_tax'] !== null) {
+        if (isset($data['subtotal_with_discount_excluding_tax'])) {
             $instance->subtotal_with_discount_excluding_tax = Money::fromArray($data['subtotal_with_discount_excluding_tax']);
         }
 
@@ -70,13 +72,13 @@ class CartPrices
     {
         $data = [];
         if ($this->applied_taxes !== null) {
-            $data['applied_taxes'] = array_map(fn ($item) => $item->asArray(), $this->applied_taxes);
+            $data['applied_taxes'] = array_map(fn (CartTaxItem $item) => $item->asArray(), $this->applied_taxes);
         }
         if ($this->discount instanceof CartDiscount) {
             $data['discount'] = $this->discount->asArray();
         }
         if ($this->discounts !== null) {
-            $data['discounts'] = array_map(fn ($item) => $item->asArray(), $this->discounts);
+            $data['discounts'] = array_map(fn (Discount $item) => $item->asArray(), $this->discounts);
         }
         if ($this->grand_total instanceof Money) {
             $data['grand_total'] = $this->grand_total->asArray();

@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class WishlistItems
 {
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;

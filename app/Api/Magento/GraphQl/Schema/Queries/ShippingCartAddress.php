@@ -6,10 +6,13 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class ShippingCartAddress
 {
+    /** @var AvailableShippingMethod[] */
     public protected(set) ?array $available_shipping_methods = null;
 
+    /** @var CartItemQuantity[] */
     public protected(set) ?array $cart_items = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $cart_items_v2 = null;
 
     public protected(set) ?string $city = null;
@@ -44,6 +47,7 @@ class ShippingCartAddress
 
     public protected(set) ?SelectedShippingMethod $selected_shipping_method = null;
 
+    /** @var string[] */
     public protected(set) ?array $street = null;
 
     public protected(set) ?string $suffix = null;
@@ -57,13 +61,13 @@ class ShippingCartAddress
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['available_shipping_methods']) && $data['available_shipping_methods'] !== null) {
+        if (isset($data['available_shipping_methods'])) {
             $instance->available_shipping_methods = array_map(AvailableShippingMethod::fromArray(...), $data['available_shipping_methods']);
         }
-        if (isset($data['cart_items']) && $data['cart_items'] !== null) {
+        if (isset($data['cart_items'])) {
             $instance->cart_items = array_map(CartItemQuantity::fromArray(...), $data['cart_items']);
         }
-        if (isset($data['cart_items_v2']) && $data['cart_items_v2'] !== null) {
+        if (isset($data['cart_items_v2'])) {
             $instance->cart_items_v2 = $data['cart_items_v2'];
         }
         if (isset($data['city'])) {
@@ -72,10 +76,10 @@ class ShippingCartAddress
         if (isset($data['company'])) {
             $instance->company = $data['company'];
         }
-        if (isset($data['country']) && $data['country'] !== null) {
+        if (isset($data['country'])) {
             $instance->country = CartAddressCountry::fromArray($data['country']);
         }
-        if (isset($data['customer_notes']) && $data['customer_notes'] !== null) {
+        if (isset($data['customer_notes'])) {
             $instance->customer_notes = $data['customer_notes'];
         }
         if (isset($data['fax'])) {
@@ -87,7 +91,7 @@ class ShippingCartAddress
         if (isset($data['id'])) {
             $instance->id = $data['id'];
         }
-        if (isset($data['items_weight']) && $data['items_weight'] !== null) {
+        if (isset($data['items_weight'])) {
             $instance->items_weight = $data['items_weight'];
         }
         if (isset($data['lastname'])) {
@@ -96,7 +100,7 @@ class ShippingCartAddress
         if (isset($data['middlename'])) {
             $instance->middlename = $data['middlename'];
         }
-        if (isset($data['pickup_location_code']) && $data['pickup_location_code'] !== null) {
+        if (isset($data['pickup_location_code'])) {
             $instance->pickup_location_code = $data['pickup_location_code'];
         }
         if (isset($data['postcode'])) {
@@ -108,10 +112,10 @@ class ShippingCartAddress
         if (isset($data['region'])) {
             $instance->region = CartAddressRegion::fromArray($data['region']);
         }
-        if (isset($data['same_as_billing']) && $data['same_as_billing'] !== null) {
+        if (isset($data['same_as_billing'])) {
             $instance->same_as_billing = $data['same_as_billing'];
         }
-        if (isset($data['selected_shipping_method']) && $data['selected_shipping_method'] !== null) {
+        if (isset($data['selected_shipping_method'])) {
             $instance->selected_shipping_method = SelectedShippingMethod::fromArray($data['selected_shipping_method']);
         }
         if (isset($data['street'])) {
@@ -150,10 +154,10 @@ class ShippingCartAddress
     {
         $data = [];
         if ($this->available_shipping_methods !== null) {
-            $data['available_shipping_methods'] = array_map(fn ($item) => $item->asArray(), $this->available_shipping_methods);
+            $data['available_shipping_methods'] = array_map(fn (AvailableShippingMethod $item) => $item->asArray(), $this->available_shipping_methods);
         }
         if ($this->cart_items !== null) {
-            $data['cart_items'] = array_map(fn ($item) => $item->asArray(), $this->cart_items);
+            $data['cart_items'] = array_map(fn (CartItemQuantity $item) => $item->asArray(), $this->cart_items);
         }
         if ($this->cart_items_v2 !== null) {
             $data['cart_items_v2'] = $this->cart_items_v2;

@@ -13,10 +13,10 @@ class CartItemQuantity
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['cart_item_id']) && $data['cart_item_id'] !== null) {
+        if (isset($data['cart_item_id'])) {
             $instance->cart_item_id = $data['cart_item_id'];
         }
-        if (isset($data['quantity']) && $data['quantity'] !== null) {
+        if (isset($data['quantity'])) {
             $instance->quantity = $data['quantity'];
         }
 

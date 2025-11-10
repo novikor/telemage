@@ -15,13 +15,13 @@ class SearchResultPageInfo
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['current_page']) && $data['current_page'] !== null) {
+        if (isset($data['current_page'])) {
             $instance->current_page = $data['current_page'];
         }
-        if (isset($data['page_size']) && $data['page_size'] !== null) {
+        if (isset($data['page_size'])) {
             $instance->page_size = $data['page_size'];
         }
-        if (isset($data['total_pages']) && $data['total_pages'] !== null) {
+        if (isset($data['total_pages'])) {
             $instance->total_pages = $data['total_pages'];
         }
 

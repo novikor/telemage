@@ -14,6 +14,7 @@ class ProductReview
 
     public protected(set) ?string $nickname = null;
 
+    /** @var ProductReviewRating[] */
     public protected(set) ?array $ratings_breakdown = null;
 
     public protected(set) ?string $summary = null;
@@ -33,25 +34,25 @@ class ProductReview
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['average_rating']) && $data['average_rating'] !== null) {
+        if (isset($data['average_rating'])) {
             $instance->average_rating = $data['average_rating'];
         }
-        if (isset($data['created_at']) && $data['created_at'] !== null) {
+        if (isset($data['created_at'])) {
             $instance->created_at = new Carbon($data['created_at']);
         }
-        if (isset($data['nickname']) && $data['nickname'] !== null) {
+        if (isset($data['nickname'])) {
             $instance->nickname = $data['nickname'];
         }
-        if (isset($data['product']) && $data['product'] !== null) {
+        if (isset($data['product'])) {
             $instance->product = $data['product'];
         }
-        if (isset($data['ratings_breakdown']) && $data['ratings_breakdown'] !== null) {
+        if (isset($data['ratings_breakdown'])) {
             $instance->ratings_breakdown = array_map(ProductReviewRating::fromArray(...), $data['ratings_breakdown']);
         }
-        if (isset($data['summary']) && $data['summary'] !== null) {
+        if (isset($data['summary'])) {
             $instance->summary = $data['summary'];
         }
-        if (isset($data['text']) && $data['text'] !== null) {
+        if (isset($data['text'])) {
             $instance->text = $data['text'];
         }
 
@@ -87,7 +88,7 @@ class ProductReview
             $data['product'] = $this->product;
         }
         if ($this->ratings_breakdown !== null) {
-            $data['ratings_breakdown'] = array_map(fn ($item) => $item->asArray(), $this->ratings_breakdown);
+            $data['ratings_breakdown'] = array_map(fn (ProductReviewRating $item) => $item->asArray(), $this->ratings_breakdown);
         }
         if ($this->summary !== null) {
             $data['summary'] = $this->summary;

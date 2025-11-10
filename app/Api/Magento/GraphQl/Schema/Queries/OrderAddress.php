@@ -28,6 +28,7 @@ class OrderAddress
 
     public protected(set) ?string $region_id = null;
 
+    /** @var string[] */
     public protected(set) ?array $street = null;
 
     public protected(set) ?string $suffix = null;
@@ -45,7 +46,7 @@ class OrderAddress
         if (isset($data['company'])) {
             $instance->company = $data['company'];
         }
-        if (isset($data['country_code']) && $data['country_code'] !== null) {
+        if (isset($data['country_code'])) {
             $instance->country_code = $data['country_code'];
         }
         if (isset($data['fax'])) {

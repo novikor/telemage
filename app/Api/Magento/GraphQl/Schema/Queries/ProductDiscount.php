@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
-class AvailablePaymentMethod
+class ProductDiscount
 {
-    public protected(set) ?string $code = null;
+    public protected(set) ?float $amount_off = null;
 
-    public protected(set) ?bool $is_deferred = null;
-
-    public protected(set) ?string $title = null;
+    public protected(set) ?float $percent_off = null;
 
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['code'])) {
-            $instance->code = $data['code'];
+        if (isset($data['amount_off'])) {
+            $instance->amount_off = $data['amount_off'];
         }
-        if (isset($data['is_deferred'])) {
-            $instance->is_deferred = $data['is_deferred'];
-        }
-        if (isset($data['title'])) {
-            $instance->title = $data['title'];
+        if (isset($data['percent_off'])) {
+            $instance->percent_off = $data['percent_off'];
         }
 
         return $instance;
@@ -44,14 +39,11 @@ class AvailablePaymentMethod
     public function asArray(): array
     {
         $data = [];
-        if ($this->code !== null) {
-            $data['code'] = $this->code;
+        if ($this->amount_off !== null) {
+            $data['amount_off'] = $this->amount_off;
         }
-        if ($this->is_deferred !== null) {
-            $data['is_deferred'] = $this->is_deferred;
-        }
-        if ($this->title !== null) {
-            $data['title'] = $this->title;
+        if ($this->percent_off !== null) {
+            $data['percent_off'] = $this->percent_off;
         }
 
         return $data;

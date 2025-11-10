@@ -15,13 +15,13 @@ class GiftMessage
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['from']) && $data['from'] !== null) {
+        if (isset($data['from'])) {
             $instance->from = $data['from'];
         }
-        if (isset($data['message']) && $data['message'] !== null) {
+        if (isset($data['message'])) {
             $instance->message = $data['message'];
         }
-        if (isset($data['to']) && $data['to'] !== null) {
+        if (isset($data['to'])) {
             $instance->to = $data['to'];
         }
 

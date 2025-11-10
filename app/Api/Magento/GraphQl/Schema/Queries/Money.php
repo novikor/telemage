@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
+use InvalidArgumentException;
+
 class Money
 {
-    public protected(set) ?CurrencyEnumEnumObject $currency = null;
+    public protected(set) ?CurrencyEnum $currency = null;
 
     public protected(set) ?float $value = null;
 
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['currency']) && $data['currency'] !== null) {
-            $instance->currency = $data['currency'];
+        if (isset($data['currency'])) {
+            $instance->currency = CurrencyEnum::from($data['currency']);
         }
         if (isset($data['value'])) {
             $instance->value = $data['value'];
@@ -27,7 +29,7 @@ class Money
     {
         $data = json_decode($json, true);
         if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
+            throw new InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
         }
 
         return self::fromArray($data);
@@ -39,7 +41,7 @@ class Money
     public function asArray(): array
     {
         $data = [];
-        if ($this->currency instanceof CurrencyEnumEnumObject) {
+        if ($this->currency instanceof CurrencyEnum) {
             $data['currency'] = $this->currency;
         }
         if ($this->value !== null) {

@@ -19,16 +19,16 @@ class Card
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['bin_details']) && $data['bin_details'] !== null) {
+        if (isset($data['bin_details'])) {
             $instance->bin_details = CardBin::fromArray($data['bin_details']);
         }
-        if (isset($data['card_expiry_month']) && $data['card_expiry_month'] !== null) {
+        if (isset($data['card_expiry_month'])) {
             $instance->card_expiry_month = $data['card_expiry_month'];
         }
-        if (isset($data['card_expiry_year']) && $data['card_expiry_year'] !== null) {
+        if (isset($data['card_expiry_year'])) {
             $instance->card_expiry_year = $data['card_expiry_year'];
         }
-        if (isset($data['last_digits']) && $data['last_digits'] !== null) {
+        if (isset($data['last_digits'])) {
             $instance->last_digits = $data['last_digits'];
         }
         if (isset($data['name'])) {

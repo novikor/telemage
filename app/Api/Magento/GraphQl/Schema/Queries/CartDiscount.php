@@ -8,6 +8,7 @@ class CartDiscount
 {
     public protected(set) ?Money $amount = null;
 
+    /** @var string[] */
     public protected(set) ?array $label = null;
 
     public static function fromArray(array $data): self

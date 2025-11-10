@@ -11,7 +11,7 @@ class PaymentSourceDetails
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['card']) && $data['card'] !== null) {
+        if (isset($data['card'])) {
             $instance->card = Card::fromArray($data['card']);
         }
 

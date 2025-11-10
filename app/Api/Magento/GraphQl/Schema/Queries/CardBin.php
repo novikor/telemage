@@ -11,7 +11,7 @@ class CardBin
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['bin']) && $data['bin'] !== null) {
+        if (isset($data['bin'])) {
             $instance->bin = $data['bin'];
         }
 

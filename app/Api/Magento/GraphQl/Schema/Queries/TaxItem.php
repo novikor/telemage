@@ -18,7 +18,7 @@ class TaxItem
         if (isset($data['amount'])) {
             $instance->amount = Money::fromArray($data['amount']);
         }
-        if (isset($data['rate']) && $data['rate'] !== null) {
+        if (isset($data['rate'])) {
             $instance->rate = $data['rate'];
         }
         if (isset($data['title'])) {

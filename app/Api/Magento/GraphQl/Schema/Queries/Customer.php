@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 class Customer
 {
+    /** @var CustomerAddress[] */
     public protected(set) ?array $addresses = null;
 
     public protected(set) ?CustomerAddresses $addressesV2 = null;
@@ -20,6 +21,7 @@ class Customer
 
     public protected(set) ?Carbon $created_at = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $custom_attributes = null;
 
     public protected(set) ?string $date_of_birth = null;
@@ -60,60 +62,61 @@ class Customer
 
     public protected(set) ?Wishlist $wishlist_v2 = null;
 
+    /** @var Wishlist[] */
     public protected(set) ?array $wishlists = null;
 
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['addresses']) && $data['addresses'] !== null) {
+        if (isset($data['addresses'])) {
             $instance->addresses = array_map(CustomerAddress::fromArray(...), $data['addresses']);
         }
-        if (isset($data['addressesV2']) && $data['addressesV2'] !== null) {
+        if (isset($data['addressesV2'])) {
             $instance->addressesV2 = CustomerAddresses::fromArray($data['addressesV2']);
         }
-        if (isset($data['allow_remote_shopping_assistance']) && $data['allow_remote_shopping_assistance'] !== null) {
+        if (isset($data['allow_remote_shopping_assistance'])) {
             $instance->allow_remote_shopping_assistance = $data['allow_remote_shopping_assistance'];
         }
-        if (isset($data['compare_list']) && $data['compare_list'] !== null) {
+        if (isset($data['compare_list'])) {
             $instance->compare_list = CompareList::fromArray($data['compare_list']);
         }
-        if (isset($data['confirmation_status']) && $data['confirmation_status'] !== null) {
+        if (isset($data['confirmation_status'])) {
             $instance->confirmation_status = $data['confirmation_status'];
         }
-        if (isset($data['created_at']) && $data['created_at'] !== null) {
+        if (isset($data['created_at'])) {
             $instance->created_at = new Carbon($data['created_at']);
         }
-        if (isset($data['custom_attributes']) && $data['custom_attributes'] !== null) {
+        if (isset($data['custom_attributes'])) {
             $instance->custom_attributes = $data['custom_attributes'];
         }
-        if (isset($data['date_of_birth']) && $data['date_of_birth'] !== null) {
+        if (isset($data['date_of_birth'])) {
             $instance->date_of_birth = $data['date_of_birth'];
         }
-        if (isset($data['default_billing']) && $data['default_billing'] !== null) {
+        if (isset($data['default_billing'])) {
             $instance->default_billing = $data['default_billing'];
         }
-        if (isset($data['default_shipping']) && $data['default_shipping'] !== null) {
+        if (isset($data['default_shipping'])) {
             $instance->default_shipping = $data['default_shipping'];
         }
-        if (isset($data['dob']) && $data['dob'] !== null) {
+        if (isset($data['dob'])) {
             $instance->dob = $data['dob'];
         }
-        if (isset($data['email']) && $data['email'] !== null) {
+        if (isset($data['email'])) {
             $instance->email = $data['email'];
         }
         if (isset($data['firstname'])) {
             $instance->firstname = $data['firstname'];
         }
-        if (isset($data['gender']) && $data['gender'] !== null) {
+        if (isset($data['gender'])) {
             $instance->gender = $data['gender'];
         }
-        if (isset($data['group_id']) && $data['group_id'] !== null) {
+        if (isset($data['group_id'])) {
             $instance->group_id = $data['group_id'];
         }
         if (isset($data['id'])) {
             $instance->id = $data['id'];
         }
-        if (isset($data['is_subscribed']) && $data['is_subscribed'] !== null) {
+        if (isset($data['is_subscribed'])) {
             $instance->is_subscribed = $data['is_subscribed'];
         }
         if (isset($data['lastname'])) {
@@ -122,28 +125,28 @@ class Customer
         if (isset($data['middlename'])) {
             $instance->middlename = $data['middlename'];
         }
-        if (isset($data['orders']) && $data['orders'] !== null) {
+        if (isset($data['orders'])) {
             $instance->orders = CustomerOrders::fromArray($data['orders']);
         }
         if (isset($data['prefix'])) {
             $instance->prefix = $data['prefix'];
         }
-        if (isset($data['reviews']) && $data['reviews'] !== null) {
+        if (isset($data['reviews'])) {
             $instance->reviews = ProductReviews::fromArray($data['reviews']);
         }
         if (isset($data['suffix'])) {
             $instance->suffix = $data['suffix'];
         }
-        if (isset($data['taxvat']) && $data['taxvat'] !== null) {
+        if (isset($data['taxvat'])) {
             $instance->taxvat = $data['taxvat'];
         }
-        if (isset($data['wishlist']) && $data['wishlist'] !== null) {
+        if (isset($data['wishlist'])) {
             $instance->wishlist = Wishlist::fromArray($data['wishlist']);
         }
-        if (isset($data['wishlist_v2']) && $data['wishlist_v2'] !== null) {
+        if (isset($data['wishlist_v2'])) {
             $instance->wishlist_v2 = Wishlist::fromArray($data['wishlist_v2']);
         }
-        if (isset($data['wishlists']) && $data['wishlists'] !== null) {
+        if (isset($data['wishlists'])) {
             $instance->wishlists = array_map(Wishlist::fromArray(...), $data['wishlists']);
         }
 
@@ -167,7 +170,7 @@ class Customer
     {
         $data = [];
         if ($this->addresses !== null) {
-            $data['addresses'] = array_map(fn ($item) => $item->asArray(), $this->addresses);
+            $data['addresses'] = array_map(fn (CustomerAddress $item) => $item->asArray(), $this->addresses);
         }
         if ($this->addressesV2 instanceof CustomerAddresses) {
             $data['addressesV2'] = $this->addressesV2->asArray();
@@ -245,7 +248,7 @@ class Customer
             $data['wishlist_v2'] = $this->wishlist_v2->asArray();
         }
         if ($this->wishlists !== null) {
-            $data['wishlists'] = array_map(fn ($item) => $item->asArray(), $this->wishlists);
+            $data['wishlists'] = array_map(fn (Wishlist $item) => $item->asArray(), $this->wishlists);
         }
 
         return $data;

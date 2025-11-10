@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
-class AvailablePaymentMethod
+class OrderItemOption
 {
-    public protected(set) ?string $code = null;
+    public protected(set) ?string $label = null;
 
-    public protected(set) ?bool $is_deferred = null;
-
-    public protected(set) ?string $title = null;
+    public protected(set) ?string $value = null;
 
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['code'])) {
-            $instance->code = $data['code'];
+        if (isset($data['label'])) {
+            $instance->label = $data['label'];
         }
-        if (isset($data['is_deferred'])) {
-            $instance->is_deferred = $data['is_deferred'];
-        }
-        if (isset($data['title'])) {
-            $instance->title = $data['title'];
+        if (isset($data['value'])) {
+            $instance->value = $data['value'];
         }
 
         return $instance;
@@ -44,14 +39,11 @@ class AvailablePaymentMethod
     public function asArray(): array
     {
         $data = [];
-        if ($this->code !== null) {
-            $data['code'] = $this->code;
+        if ($this->label !== null) {
+            $data['label'] = $this->label;
         }
-        if ($this->is_deferred !== null) {
-            $data['is_deferred'] = $this->is_deferred;
-        }
-        if ($this->title !== null) {
-            $data['title'] = $this->title;
+        if ($this->value !== null) {
+            $data['value'] = $this->value;
         }
 
         return $data;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Telegram\Commands;
 
 use App\Api\ApiException;
+use App\Models\TelegramUser;
 use App\Services\Api\Magento\CustomerService;
 use App\Telegram\Commands\Traits\ExtractsRequestData;
 use Illuminate\Http\Client\ConnectionException;
@@ -18,7 +19,7 @@ class StartCommand
     public function __invoke(Nutgram $bot, CustomerService $service): void
     {
         $telegramUser = $this->getTelegramUser($bot);
-        if (!$telegramUser instanceof \App\Models\TelegramUser) {
+        if (! $telegramUser instanceof TelegramUser) {
             $bot->sendMessage(
                 sprintf(
                     "Hello! To connect your account, please log in on %s and click a 'Connect Telegram' button.",

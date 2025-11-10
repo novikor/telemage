@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CustomerAddresses
 {
+    /** @var CustomerAddress[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;
@@ -21,7 +22,7 @@ class CustomerAddresses
         if (isset($data['page_info'])) {
             $instance->page_info = SearchResultPageInfo::fromArray($data['page_info']);
         }
-        if (isset($data['total_count']) && $data['total_count'] !== null) {
+        if (isset($data['total_count'])) {
             $instance->total_count = $data['total_count'];
         }
 
@@ -45,7 +46,7 @@ class CustomerAddresses
     {
         $data = [];
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (CustomerAddress $item) => $item->asArray(), $this->items);
         }
         if ($this->page_info instanceof SearchResultPageInfo) {
             $data['page_info'] = $this->page_info->asArray();

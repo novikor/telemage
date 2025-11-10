@@ -29,19 +29,19 @@ class WishlistItem
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['added_at']) && $data['added_at'] !== null) {
+        if (isset($data['added_at'])) {
             $instance->added_at = new Carbon($data['added_at']);
         }
-        if (isset($data['description']) && $data['description'] !== null) {
+        if (isset($data['description'])) {
             $instance->description = $data['description'];
         }
         if (isset($data['id'])) {
             $instance->id = $data['id'];
         }
-        if (isset($data['product']) && $data['product'] !== null) {
+        if (isset($data['product'])) {
             $instance->product = $data['product'];
         }
-        if (isset($data['qty']) && $data['qty'] !== null) {
+        if (isset($data['qty'])) {
             $instance->qty = $data['qty'];
         }
 
