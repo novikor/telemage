@@ -8,18 +8,22 @@ use Carbon\Carbon;
 
 class CustomerOrder
 {
+    /** @var AppliedCoupon[] */
     public protected(set) ?array $applied_coupons = null;
 
+    /** @var OrderActionTypeEnumObject[] */
     public protected(set) ?array $available_actions = null;
 
     public protected(set) ?OrderAddress $billing_address = null;
 
     public protected(set) ?string $carrier = null;
 
+    /** @var SalesCommentItem[] */
     public protected(set) ?array $comments = null;
 
     public protected(set) ?Carbon $created_at = null;
 
+    /** @var CreditMemo[] */
     public protected(set) ?array $credit_memos = null;
 
     public protected(set) ?OrderCustomerInfo $customer_info = null;
@@ -34,10 +38,12 @@ class CustomerOrder
 
     public protected(set) ?string $increment_id = null;
 
+    /** @var Invoice[] */
     public protected(set) ?array $invoices = null;
 
     public protected(set) ?bool $is_virtual = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?string $number = null;
@@ -48,8 +54,10 @@ class CustomerOrder
 
     public protected(set) ?string $order_status_change_date = null;
 
+    /** @var OrderPaymentMethod[] */
     public protected(set) ?array $payment_methods = null;
 
+    /** @var OrderShipment[] */
     public protected(set) ?array $shipments = null;
 
     public protected(set) ?OrderAddress $shipping_address = null;
@@ -110,8 +118,8 @@ class CustomerOrder
         if (isset($data['is_virtual'])) {
             $instance->is_virtual = $data['is_virtual'];
         }
-        if (isset($data['items'])) {
-            $instance->items = $data['items'];
+        if (isset($data['items']) && is_array($data['items']) && array_is_list($data['items'])) {
+            $instance->items = array_map(OrderItem::fromArray(...), $data['items']);
         }
         if (isset($data['number'])) {
             $instance->number = $data['number'];
@@ -167,7 +175,7 @@ class CustomerOrder
     {
         $data = [];
         if ($this->applied_coupons !== null) {
-            $data['applied_coupons'] = array_map(fn ($item) => $item->asArray(), $this->applied_coupons);
+            $data['applied_coupons'] = array_map(fn (AppliedCoupon $item) => $item->asArray(), $this->applied_coupons);
         }
         if ($this->available_actions !== null) {
             $data['available_actions'] = $this->available_actions;
@@ -179,13 +187,13 @@ class CustomerOrder
             $data['carrier'] = $this->carrier;
         }
         if ($this->comments !== null) {
-            $data['comments'] = array_map(fn ($item) => $item->asArray(), $this->comments);
+            $data['comments'] = array_map(fn (SalesCommentItem $item) => $item->asArray(), $this->comments);
         }
         if ($this->created_at instanceof Carbon) {
             $data['created_at'] = $this->created_at->toIso8601String();
         }
         if ($this->credit_memos !== null) {
-            $data['credit_memos'] = array_map(fn ($item) => $item->asArray(), $this->credit_memos);
+            $data['credit_memos'] = array_map(fn (CreditMemo $item) => $item->asArray(), $this->credit_memos);
         }
         if ($this->customer_info instanceof OrderCustomerInfo) {
             $data['customer_info'] = $this->customer_info->asArray();
@@ -206,7 +214,7 @@ class CustomerOrder
             $data['increment_id'] = $this->increment_id;
         }
         if ($this->invoices !== null) {
-            $data['invoices'] = array_map(fn ($item) => $item->asArray(), $this->invoices);
+            $data['invoices'] = array_map(fn (Invoice $item) => $item->asArray(), $this->invoices);
         }
         if ($this->is_virtual !== null) {
             $data['is_virtual'] = $this->is_virtual;
@@ -227,10 +235,10 @@ class CustomerOrder
             $data['order_status_change_date'] = $this->order_status_change_date;
         }
         if ($this->payment_methods !== null) {
-            $data['payment_methods'] = array_map(fn ($item) => $item->asArray(), $this->payment_methods);
+            $data['payment_methods'] = array_map(fn (OrderPaymentMethod $item) => $item->asArray(), $this->payment_methods);
         }
         if ($this->shipments !== null) {
-            $data['shipments'] = array_map(fn ($item) => $item->asArray(), $this->shipments);
+            $data['shipments'] = array_map(fn (OrderShipment $item) => $item->asArray(), $this->shipments);
         }
         if ($this->shipping_address instanceof OrderAddress) {
             $data['shipping_address'] = $this->shipping_address->asArray();

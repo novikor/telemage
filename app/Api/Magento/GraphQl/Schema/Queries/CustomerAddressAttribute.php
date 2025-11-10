@@ -13,7 +13,7 @@ class CustomerAddressAttribute
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['attribute_code']) && $data['attribute_code'] !== null) {
+        if (isset($data['attribute_code'])) {
             $instance->attribute_code = $data['attribute_code'];
         }
         if (isset($data['value'])) {

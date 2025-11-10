@@ -6,14 +6,17 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class OrderShipment
 {
+    /** @var SalesCommentItem[] */
     public protected(set) ?array $comments = null;
 
     public protected(set) ?string $id = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?string $number = null;
 
+    /** @var ShipmentTracking[] */
     public protected(set) ?array $tracking = null;
 
     public static function fromArray(array $data): self
@@ -31,7 +34,7 @@ class OrderShipment
         if (isset($data['number'])) {
             $instance->number = $data['number'];
         }
-        if (isset($data['tracking']) && $data['tracking'] !== null) {
+        if (isset($data['tracking'])) {
             $instance->tracking = array_map(ShipmentTracking::fromArray(...), $data['tracking']);
         }
 
@@ -55,7 +58,7 @@ class OrderShipment
     {
         $data = [];
         if ($this->comments !== null) {
-            $data['comments'] = array_map(fn ($item) => $item->asArray(), $this->comments);
+            $data['comments'] = array_map(fn (SalesCommentItem $item) => $item->asArray(), $this->comments);
         }
         if ($this->id !== null) {
             $data['id'] = $this->id;
@@ -67,7 +70,7 @@ class OrderShipment
             $data['number'] = $this->number;
         }
         if ($this->tracking !== null) {
-            $data['tracking'] = array_map(fn ($item) => $item->asArray(), $this->tracking);
+            $data['tracking'] = array_map(fn (ShipmentTracking $item) => $item->asArray(), $this->tracking);
         }
 
         return $data;

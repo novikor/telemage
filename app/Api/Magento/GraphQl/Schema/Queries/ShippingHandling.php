@@ -10,8 +10,10 @@ class ShippingHandling
 
     public protected(set) ?Money $amount_including_tax = null;
 
+    /** @var ShippingDiscount[] */
     public protected(set) ?array $discounts = null;
 
+    /** @var TaxItem[] */
     public protected(set) ?array $taxes = null;
 
     public protected(set) ?Money $total_amount = null;
@@ -19,10 +21,10 @@ class ShippingHandling
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['amount_excluding_tax']) && $data['amount_excluding_tax'] !== null) {
+        if (isset($data['amount_excluding_tax'])) {
             $instance->amount_excluding_tax = Money::fromArray($data['amount_excluding_tax']);
         }
-        if (isset($data['amount_including_tax']) && $data['amount_including_tax'] !== null) {
+        if (isset($data['amount_including_tax'])) {
             $instance->amount_including_tax = Money::fromArray($data['amount_including_tax']);
         }
         if (isset($data['discounts'])) {
@@ -31,7 +33,7 @@ class ShippingHandling
         if (isset($data['taxes'])) {
             $instance->taxes = array_map(TaxItem::fromArray(...), $data['taxes']);
         }
-        if (isset($data['total_amount']) && $data['total_amount'] !== null) {
+        if (isset($data['total_amount'])) {
             $instance->total_amount = Money::fromArray($data['total_amount']);
         }
 
@@ -61,10 +63,10 @@ class ShippingHandling
             $data['amount_including_tax'] = $this->amount_including_tax->asArray();
         }
         if ($this->discounts !== null) {
-            $data['discounts'] = array_map(fn ($item) => $item->asArray(), $this->discounts);
+            $data['discounts'] = array_map(fn (ShippingDiscount $item) => $item->asArray(), $this->discounts);
         }
         if ($this->taxes !== null) {
-            $data['taxes'] = array_map(fn ($item) => $item->asArray(), $this->taxes);
+            $data['taxes'] = array_map(fn (TaxItem $item) => $item->asArray(), $this->taxes);
         }
         if ($this->total_amount instanceof Money) {
             $data['total_amount'] = $this->total_amount->asArray();

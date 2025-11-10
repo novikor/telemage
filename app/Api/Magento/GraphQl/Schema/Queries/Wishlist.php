@@ -10,6 +10,7 @@ class Wishlist
 {
     public protected(set) ?string $id = null;
 
+    /** @var WishlistItem[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?int $items_count = null;
@@ -29,16 +30,16 @@ class Wishlist
         if (isset($data['items'])) {
             $instance->items = array_map(WishlistItem::fromArray(...), $data['items']);
         }
-        if (isset($data['items_count']) && $data['items_count'] !== null) {
+        if (isset($data['items_count'])) {
             $instance->items_count = $data['items_count'];
         }
-        if (isset($data['items_v2']) && $data['items_v2'] !== null) {
+        if (isset($data['items_v2'])) {
             $instance->items_v2 = WishlistItems::fromArray($data['items_v2']);
         }
-        if (isset($data['sharing_code']) && $data['sharing_code'] !== null) {
+        if (isset($data['sharing_code'])) {
             $instance->sharing_code = $data['sharing_code'];
         }
-        if (isset($data['updated_at']) && $data['updated_at'] !== null) {
+        if (isset($data['updated_at'])) {
             $instance->updated_at = new Carbon($data['updated_at']);
         }
 
@@ -65,7 +66,7 @@ class Wishlist
             $data['id'] = $this->id;
         }
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (WishlistItem $item) => $item->asArray(), $this->items);
         }
         if ($this->items_count !== null) {
             $data['items_count'] = $this->items_count;

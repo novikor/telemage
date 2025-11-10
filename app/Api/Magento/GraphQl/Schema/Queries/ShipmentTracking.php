@@ -15,7 +15,7 @@ class ShipmentTracking
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['carrier']) && $data['carrier'] !== null) {
+        if (isset($data['carrier'])) {
             $instance->carrier = $data['carrier'];
         }
         if (isset($data['number'])) {

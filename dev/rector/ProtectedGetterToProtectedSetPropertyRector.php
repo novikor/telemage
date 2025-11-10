@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Rector;
 
 use PhpParser\BuilderFactory;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt;
@@ -107,9 +108,10 @@ CODE_SAMPLE
                 if ($type instanceof UnionType) {
                     continue;
                 }
-                $type = new NullableType($type);
-
-                $newProperty = $this->createPropertyWithProtectedSet($propertyName, $type);
+                $phpdocType = $returnType->isArray()->yes()
+                    ? $phpDocInfo->getReturnTagValue()->__toString() :
+                    null;
+                $newProperty = $this->createPropertyWithProtectedSet($propertyName, $type, $phpdocType);
                 $propertiesToAdd[] = $newProperty;
 
                 $propertiesToRemove[] = $property;
@@ -131,11 +133,23 @@ CODE_SAMPLE
         return $node;
     }
 
-    private function createPropertyWithProtectedSet(string $name, Node\Identifier|Node\Name|Node\ComplexType $typeNode): Property
-    {
+    private function createPropertyWithProtectedSet(
+        string $name, Node\Identifier|Node\Name|Node\ComplexType $type,
+        ?string $phpdocType
+    ): Property {
         $propertyBuilder = $this->builderFactory->property($name)
             ->makeProtectedSet()
-            ->setType($typeNode);
+            ->setType(new NullableType($type));
+        if ($phpdocType) {
+            $propertyBuilder->setDocComment(
+                new Doc(
+                    sprintf(
+                        '/** @var %s */',
+                        $phpdocType
+                    )
+                )
+            );
+        }
 
         return $propertyBuilder->getNode();
     }

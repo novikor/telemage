@@ -19,19 +19,19 @@ class CustomerDownloadableProduct
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['date']) && $data['date'] !== null) {
+        if (isset($data['date'])) {
             $instance->date = $data['date'];
         }
-        if (isset($data['download_url']) && $data['download_url'] !== null) {
+        if (isset($data['download_url'])) {
             $instance->download_url = $data['download_url'];
         }
-        if (isset($data['order_increment_id']) && $data['order_increment_id'] !== null) {
+        if (isset($data['order_increment_id'])) {
             $instance->order_increment_id = $data['order_increment_id'];
         }
-        if (isset($data['remaining_downloads']) && $data['remaining_downloads'] !== null) {
+        if (isset($data['remaining_downloads'])) {
             $instance->remaining_downloads = $data['remaining_downloads'];
         }
-        if (isset($data['status']) && $data['status'] !== null) {
+        if (isset($data['status'])) {
             $instance->status = $data['status'];
         }
 

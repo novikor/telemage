@@ -8,6 +8,7 @@ class CustomerOrders
 {
     public protected(set) ?string $date_of_first_order = null;
 
+    /** @var CustomerOrder[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;
@@ -17,7 +18,7 @@ class CustomerOrders
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['date_of_first_order']) && $data['date_of_first_order'] !== null) {
+        if (isset($data['date_of_first_order'])) {
             $instance->date_of_first_order = $data['date_of_first_order'];
         }
         if (isset($data['items'])) {
@@ -26,7 +27,7 @@ class CustomerOrders
         if (isset($data['page_info'])) {
             $instance->page_info = SearchResultPageInfo::fromArray($data['page_info']);
         }
-        if (isset($data['total_count']) && $data['total_count'] !== null) {
+        if (isset($data['total_count'])) {
             $instance->total_count = $data['total_count'];
         }
 
@@ -53,7 +54,7 @@ class CustomerOrders
             $data['date_of_first_order'] = $this->date_of_first_order;
         }
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (CustomerOrder $item) => $item->asArray(), $this->items);
         }
         if ($this->page_info instanceof SearchResultPageInfo) {
             $data['page_info'] = $this->page_info->asArray();

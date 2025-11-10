@@ -146,6 +146,14 @@ class CustomerOrderQueryObject extends QueryObject
         return $this;
     }
 
+    public function selectItems(): OrderItemQueryObject
+    {
+        $object = new OrderItemQueryObject('items');
+        $this->selectField($object);
+
+        return $object;
+    }
+
     public function selectNumber(): static
     {
         $this->selectField('number');

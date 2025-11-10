@@ -6,10 +6,12 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CreditMemo
 {
+    /** @var SalesCommentItem[] */
     public protected(set) ?array $comments = null;
 
     public protected(set) ?string $id = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?string $number = null;
@@ -31,7 +33,7 @@ class CreditMemo
         if (isset($data['number'])) {
             $instance->number = $data['number'];
         }
-        if (isset($data['total']) && $data['total'] !== null) {
+        if (isset($data['total'])) {
             $instance->total = CreditMemoTotal::fromArray($data['total']);
         }
 
@@ -55,7 +57,7 @@ class CreditMemo
     {
         $data = [];
         if ($this->comments !== null) {
-            $data['comments'] = array_map(fn ($item) => $item->asArray(), $this->comments);
+            $data['comments'] = array_map(fn (SalesCommentItem $item) => $item->asArray(), $this->comments);
         }
         if ($this->id !== null) {
             $data['id'] = $this->id;

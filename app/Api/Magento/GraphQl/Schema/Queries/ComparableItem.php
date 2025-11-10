@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class ComparableItem
 {
+    /** @var ProductAttribute[] */
     public protected(set) ?array $attributes = null;
 
     public protected(set) ?string $uid = null;
@@ -23,10 +24,10 @@ class ComparableItem
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['attributes']) && $data['attributes'] !== null) {
+        if (isset($data['attributes'])) {
             $instance->attributes = array_map(ProductAttribute::fromArray(...), $data['attributes']);
         }
-        if (isset($data['product']) && $data['product'] !== null) {
+        if (isset($data['product'])) {
             $instance->product = $data['product'];
         }
         if (isset($data['uid'])) {
@@ -53,7 +54,7 @@ class ComparableItem
     {
         $data = [];
         if ($this->attributes !== null) {
-            $data['attributes'] = array_map(fn ($item) => $item->asArray(), $this->attributes);
+            $data['attributes'] = array_map(fn (ProductAttribute $item) => $item->asArray(), $this->attributes);
         }
         if ($this->product !== null) {
             $data['product'] = $this->product;

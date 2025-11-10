@@ -20,13 +20,13 @@ class PaymentOrderOutput
         if (isset($data['id'])) {
             $instance->id = $data['id'];
         }
-        if (isset($data['mp_order_id']) && $data['mp_order_id'] !== null) {
+        if (isset($data['mp_order_id'])) {
             $instance->mp_order_id = $data['mp_order_id'];
         }
-        if (isset($data['payment_source_details']) && $data['payment_source_details'] !== null) {
+        if (isset($data['payment_source_details'])) {
             $instance->payment_source_details = PaymentSourceDetails::fromArray($data['payment_source_details']);
         }
-        if (isset($data['status']) && $data['status'] !== null) {
+        if (isset($data['status'])) {
             $instance->status = $data['status'];
         }
 

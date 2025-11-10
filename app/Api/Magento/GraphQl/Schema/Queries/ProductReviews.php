@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class ProductReviews
 {
+    /** @var ProductReview[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;
@@ -40,7 +41,7 @@ class ProductReviews
     {
         $data = [];
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (ProductReview $item) => $item->asArray(), $this->items);
         }
         if ($this->page_info instanceof SearchResultPageInfo) {
             $data['page_info'] = $this->page_info->asArray();

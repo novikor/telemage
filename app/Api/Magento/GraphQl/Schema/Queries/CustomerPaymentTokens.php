@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CustomerPaymentTokens
 {
+    /** @var PaymentToken[] */
     public protected(set) ?array $items = null;
 
     public static function fromArray(array $data): self
@@ -35,7 +36,7 @@ class CustomerPaymentTokens
     {
         $data = [];
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (PaymentToken $item) => $item->asArray(), $this->items);
         }
 
         return $data;

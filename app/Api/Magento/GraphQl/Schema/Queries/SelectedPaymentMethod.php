@@ -18,7 +18,7 @@ class SelectedPaymentMethod
         if (isset($data['code'])) {
             $instance->code = $data['code'];
         }
-        if (isset($data['purchase_order_number']) && $data['purchase_order_number'] !== null) {
+        if (isset($data['purchase_order_number'])) {
             $instance->purchase_order_number = $data['purchase_order_number'];
         }
         if (isset($data['title'])) {

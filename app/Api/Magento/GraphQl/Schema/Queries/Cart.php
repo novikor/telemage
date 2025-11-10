@@ -8,8 +8,10 @@ class Cart
 {
     public protected(set) ?AppliedCoupon $applied_coupon = null;
 
+    /** @var AppliedCoupon[] */
     public protected(set) ?array $applied_coupons = null;
 
+    /** @var AvailablePaymentMethod[] */
     public protected(set) ?array $available_payment_methods = null;
 
     public protected(set) ?BillingCartAddress $billing_address = null;
@@ -22,6 +24,7 @@ class Cart
 
     public protected(set) ?bool $is_virtual = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?CartItems $itemsV2 = null;
@@ -30,6 +33,7 @@ class Cart
 
     public protected(set) ?SelectedPaymentMethod $selected_payment_method = null;
 
+    /** @var ShippingCartAddress[] */
     public protected(set) ?array $shipping_addresses = null;
 
     public protected(set) ?float $total_quantity = null;
@@ -37,46 +41,46 @@ class Cart
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['applied_coupon']) && $data['applied_coupon'] !== null) {
+        if (isset($data['applied_coupon'])) {
             $instance->applied_coupon = AppliedCoupon::fromArray($data['applied_coupon']);
         }
-        if (isset($data['applied_coupons']) && $data['applied_coupons'] !== null) {
+        if (isset($data['applied_coupons'])) {
             $instance->applied_coupons = array_map(AppliedCoupon::fromArray(...), $data['applied_coupons']);
         }
-        if (isset($data['available_payment_methods']) && $data['available_payment_methods'] !== null) {
+        if (isset($data['available_payment_methods'])) {
             $instance->available_payment_methods = array_map(AvailablePaymentMethod::fromArray(...), $data['available_payment_methods']);
         }
-        if (isset($data['billing_address']) && $data['billing_address'] !== null) {
+        if (isset($data['billing_address'])) {
             $instance->billing_address = BillingCartAddress::fromArray($data['billing_address']);
         }
-        if (isset($data['email']) && $data['email'] !== null) {
+        if (isset($data['email'])) {
             $instance->email = $data['email'];
         }
-        if (isset($data['gift_message']) && $data['gift_message'] !== null) {
+        if (isset($data['gift_message'])) {
             $instance->gift_message = GiftMessage::fromArray($data['gift_message']);
         }
         if (isset($data['id'])) {
             $instance->id = $data['id'];
         }
-        if (isset($data['is_virtual']) && $data['is_virtual'] !== null) {
+        if (isset($data['is_virtual'])) {
             $instance->is_virtual = $data['is_virtual'];
         }
         if (isset($data['items'])) {
             $instance->items = $data['items'];
         }
-        if (isset($data['itemsV2']) && $data['itemsV2'] !== null) {
+        if (isset($data['itemsV2'])) {
             $instance->itemsV2 = CartItems::fromArray($data['itemsV2']);
         }
-        if (isset($data['prices']) && $data['prices'] !== null) {
+        if (isset($data['prices'])) {
             $instance->prices = CartPrices::fromArray($data['prices']);
         }
-        if (isset($data['selected_payment_method']) && $data['selected_payment_method'] !== null) {
+        if (isset($data['selected_payment_method'])) {
             $instance->selected_payment_method = SelectedPaymentMethod::fromArray($data['selected_payment_method']);
         }
-        if (isset($data['shipping_addresses']) && $data['shipping_addresses'] !== null) {
+        if (isset($data['shipping_addresses'])) {
             $instance->shipping_addresses = array_map(ShippingCartAddress::fromArray(...), $data['shipping_addresses']);
         }
-        if (isset($data['total_quantity']) && $data['total_quantity'] !== null) {
+        if (isset($data['total_quantity'])) {
             $instance->total_quantity = $data['total_quantity'];
         }
 
@@ -103,10 +107,10 @@ class Cart
             $data['applied_coupon'] = $this->applied_coupon->asArray();
         }
         if ($this->applied_coupons !== null) {
-            $data['applied_coupons'] = array_map(fn ($item) => $item->asArray(), $this->applied_coupons);
+            $data['applied_coupons'] = array_map(fn (AppliedCoupon $item) => $item->asArray(), $this->applied_coupons);
         }
         if ($this->available_payment_methods !== null) {
-            $data['available_payment_methods'] = array_map(fn ($item) => $item->asArray(), $this->available_payment_methods);
+            $data['available_payment_methods'] = array_map(fn (AvailablePaymentMethod $item) => $item->asArray(), $this->available_payment_methods);
         }
         if ($this->billing_address instanceof BillingCartAddress) {
             $data['billing_address'] = $this->billing_address->asArray();
@@ -136,7 +140,7 @@ class Cart
             $data['selected_payment_method'] = $this->selected_payment_method->asArray();
         }
         if ($this->shipping_addresses !== null) {
-            $data['shipping_addresses'] = array_map(fn ($item) => $item->asArray(), $this->shipping_addresses);
+            $data['shipping_addresses'] = array_map(fn (ShippingCartAddress $item) => $item->asArray(), $this->shipping_addresses);
         }
         if ($this->total_quantity !== null) {
             $data['total_quantity'] = $this->total_quantity;

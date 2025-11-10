@@ -32,31 +32,31 @@ class AvailableShippingMethod
         if (isset($data['amount'])) {
             $instance->amount = Money::fromArray($data['amount']);
         }
-        if (isset($data['available']) && $data['available'] !== null) {
+        if (isset($data['available'])) {
             $instance->available = $data['available'];
         }
-        if (isset($data['base_amount']) && $data['base_amount'] !== null) {
+        if (isset($data['base_amount'])) {
             $instance->base_amount = Money::fromArray($data['base_amount']);
         }
-        if (isset($data['carrier_code']) && $data['carrier_code'] !== null) {
+        if (isset($data['carrier_code'])) {
             $instance->carrier_code = $data['carrier_code'];
         }
-        if (isset($data['carrier_title']) && $data['carrier_title'] !== null) {
+        if (isset($data['carrier_title'])) {
             $instance->carrier_title = $data['carrier_title'];
         }
-        if (isset($data['error_message']) && $data['error_message'] !== null) {
+        if (isset($data['error_message'])) {
             $instance->error_message = $data['error_message'];
         }
-        if (isset($data['method_code']) && $data['method_code'] !== null) {
+        if (isset($data['method_code'])) {
             $instance->method_code = $data['method_code'];
         }
-        if (isset($data['method_title']) && $data['method_title'] !== null) {
+        if (isset($data['method_title'])) {
             $instance->method_title = $data['method_title'];
         }
-        if (isset($data['price_excl_tax']) && $data['price_excl_tax'] !== null) {
+        if (isset($data['price_excl_tax'])) {
             $instance->price_excl_tax = Money::fromArray($data['price_excl_tax']);
         }
-        if (isset($data['price_incl_tax']) && $data['price_incl_tax'] !== null) {
+        if (isset($data['price_incl_tax'])) {
             $instance->price_incl_tax = Money::fromArray($data['price_incl_tax']);
         }
 

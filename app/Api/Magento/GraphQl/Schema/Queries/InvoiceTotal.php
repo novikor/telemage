@@ -8,6 +8,7 @@ class InvoiceTotal
 {
     public protected(set) ?Money $base_grand_total = null;
 
+    /** @var Discount[] */
     public protected(set) ?array $discounts = null;
 
     public protected(set) ?Money $grand_total = null;
@@ -16,6 +17,7 @@ class InvoiceTotal
 
     public protected(set) ?Money $subtotal = null;
 
+    /** @var TaxItem[] */
     public protected(set) ?array $taxes = null;
 
     public protected(set) ?Money $total_shipping = null;
@@ -37,16 +39,16 @@ class InvoiceTotal
         if (isset($data['shipping_handling'])) {
             $instance->shipping_handling = ShippingHandling::fromArray($data['shipping_handling']);
         }
-        if (isset($data['subtotal']) && $data['subtotal'] !== null) {
+        if (isset($data['subtotal'])) {
             $instance->subtotal = Money::fromArray($data['subtotal']);
         }
         if (isset($data['taxes'])) {
             $instance->taxes = array_map(TaxItem::fromArray(...), $data['taxes']);
         }
-        if (isset($data['total_shipping']) && $data['total_shipping'] !== null) {
+        if (isset($data['total_shipping'])) {
             $instance->total_shipping = Money::fromArray($data['total_shipping']);
         }
-        if (isset($data['total_tax']) && $data['total_tax'] !== null) {
+        if (isset($data['total_tax'])) {
             $instance->total_tax = Money::fromArray($data['total_tax']);
         }
 
@@ -73,7 +75,7 @@ class InvoiceTotal
             $data['base_grand_total'] = $this->base_grand_total->asArray();
         }
         if ($this->discounts !== null) {
-            $data['discounts'] = array_map(fn ($item) => $item->asArray(), $this->discounts);
+            $data['discounts'] = array_map(fn (Discount $item) => $item->asArray(), $this->discounts);
         }
         if ($this->grand_total instanceof Money) {
             $data['grand_total'] = $this->grand_total->asArray();
@@ -85,7 +87,7 @@ class InvoiceTotal
             $data['subtotal'] = $this->subtotal->asArray();
         }
         if ($this->taxes !== null) {
-            $data['taxes'] = array_map(fn ($item) => $item->asArray(), $this->taxes);
+            $data['taxes'] = array_map(fn (TaxItem $item) => $item->asArray(), $this->taxes);
         }
         if ($this->total_shipping instanceof Money) {
             $data['total_shipping'] = $this->total_shipping->asArray();

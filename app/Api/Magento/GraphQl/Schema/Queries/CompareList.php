@@ -6,10 +6,12 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CompareList
 {
+    /** @var ComparableAttribute[] */
     public protected(set) ?array $attributes = null;
 
     public protected(set) ?int $item_count = null;
 
+    /** @var ComparableItem[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?string $uid = null;
@@ -17,10 +19,10 @@ class CompareList
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['attributes']) && $data['attributes'] !== null) {
+        if (isset($data['attributes'])) {
             $instance->attributes = array_map(ComparableAttribute::fromArray(...), $data['attributes']);
         }
-        if (isset($data['item_count']) && $data['item_count'] !== null) {
+        if (isset($data['item_count'])) {
             $instance->item_count = $data['item_count'];
         }
         if (isset($data['items'])) {
@@ -50,13 +52,13 @@ class CompareList
     {
         $data = [];
         if ($this->attributes !== null) {
-            $data['attributes'] = array_map(fn ($item) => $item->asArray(), $this->attributes);
+            $data['attributes'] = array_map(fn (ComparableAttribute $item) => $item->asArray(), $this->attributes);
         }
         if ($this->item_count !== null) {
             $data['item_count'] = $this->item_count;
         }
         if ($this->items !== null) {
-            $data['items'] = array_map(fn ($item) => $item->asArray(), $this->items);
+            $data['items'] = array_map(fn (ComparableItem $item) => $item->asArray(), $this->items);
         }
         if ($this->uid !== null) {
             $data['uid'] = $this->uid;

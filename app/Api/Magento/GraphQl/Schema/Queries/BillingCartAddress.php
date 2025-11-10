@@ -30,6 +30,7 @@ class BillingCartAddress
 
     public protected(set) ?CartAddressRegion $region = null;
 
+    /** @var string[] */
     public protected(set) ?array $street = null;
 
     public protected(set) ?string $suffix = null;
@@ -49,10 +50,10 @@ class BillingCartAddress
         if (isset($data['company'])) {
             $instance->company = $data['company'];
         }
-        if (isset($data['country']) && $data['country'] !== null) {
+        if (isset($data['country'])) {
             $instance->country = CartAddressCountry::fromArray($data['country']);
         }
-        if (isset($data['customer_notes']) && $data['customer_notes'] !== null) {
+        if (isset($data['customer_notes'])) {
             $instance->customer_notes = $data['customer_notes'];
         }
         if (isset($data['fax'])) {

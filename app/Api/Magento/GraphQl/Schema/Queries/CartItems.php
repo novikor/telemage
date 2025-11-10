@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class CartItems
 {
+    /** @var mixed[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;
@@ -21,7 +22,7 @@ class CartItems
         if (isset($data['page_info'])) {
             $instance->page_info = SearchResultPageInfo::fromArray($data['page_info']);
         }
-        if (isset($data['total_count']) && $data['total_count'] !== null) {
+        if (isset($data['total_count'])) {
             $instance->total_count = $data['total_count'];
         }
 

@@ -6,6 +6,7 @@ namespace App\Api\Magento\GraphQl\Schema\Queries;
 
 class OrderPaymentMethod
 {
+    /** @var KeyValue[] */
     public protected(set) ?array $additional_data = null;
 
     public protected(set) ?string $name = null;
@@ -15,13 +16,13 @@ class OrderPaymentMethod
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['additional_data']) && $data['additional_data'] !== null) {
+        if (isset($data['additional_data'])) {
             $instance->additional_data = array_map(KeyValue::fromArray(...), $data['additional_data']);
         }
         if (isset($data['name'])) {
             $instance->name = $data['name'];
         }
-        if (isset($data['type']) && $data['type'] !== null) {
+        if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
 
@@ -45,7 +46,7 @@ class OrderPaymentMethod
     {
         $data = [];
         if ($this->additional_data !== null) {
-            $data['additional_data'] = array_map(fn ($item) => $item->asArray(), $this->additional_data);
+            $data['additional_data'] = array_map(fn (KeyValue $item) => $item->asArray(), $this->additional_data);
         }
         if ($this->name !== null) {
             $data['name'] = $this->name;

@@ -23,7 +23,7 @@ class Discount
         if (isset($data['applied_to'])) {
             $instance->applied_to = $data['applied_to'];
         }
-        if (isset($data['coupon']) && $data['coupon'] !== null) {
+        if (isset($data['coupon'])) {
             $instance->coupon = AppliedCoupon::fromArray($data['coupon']);
         }
         if (isset($data['label'])) {

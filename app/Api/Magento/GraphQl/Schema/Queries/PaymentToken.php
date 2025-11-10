@@ -17,16 +17,16 @@ class PaymentToken
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['details']) && $data['details'] !== null) {
+        if (isset($data['details'])) {
             $instance->details = $data['details'];
         }
-        if (isset($data['payment_method_code']) && $data['payment_method_code'] !== null) {
+        if (isset($data['payment_method_code'])) {
             $instance->payment_method_code = $data['payment_method_code'];
         }
-        if (isset($data['public_hash']) && $data['public_hash'] !== null) {
+        if (isset($data['public_hash'])) {
             $instance->public_hash = $data['public_hash'];
         }
-        if (isset($data['type']) && $data['type'] !== null) {
+        if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
 

@@ -13,10 +13,10 @@ class SalesCommentItem
     public static function fromArray(array $data): self
     {
         $instance = new self;
-        if (isset($data['message']) && $data['message'] !== null) {
+        if (isset($data['message'])) {
             $instance->message = $data['message'];
         }
-        if (isset($data['timestamp']) && $data['timestamp'] !== null) {
+        if (isset($data['timestamp'])) {
             $instance->timestamp = $data['timestamp'];
         }
 

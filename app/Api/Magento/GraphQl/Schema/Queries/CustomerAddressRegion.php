@@ -18,7 +18,7 @@ class CustomerAddressRegion
         if (isset($data['region'])) {
             $instance->region = $data['region'];
         }
-        if (isset($data['region_code']) && $data['region_code'] !== null) {
+        if (isset($data['region_code'])) {
             $instance->region_code = $data['region_code'];
         }
         if (isset($data['region_id'])) {

@@ -14,8 +14,10 @@ class CustomerAddress
 
     public protected(set) ?string $country_id = null;
 
+    /** @var CustomerAddressAttribute[] */
     public protected(set) ?array $custom_attributes = null;
 
+    /** @var mixed[] */
     public protected(set) ?array $custom_attributesV2 = null;
 
     public protected(set) ?int $customer_id = null;
@@ -24,6 +26,7 @@ class CustomerAddress
 
     public protected(set) ?bool $default_shipping = null;
 
+    /** @var CustomerAddressAttribute[] */
     public protected(set) ?array $extension_attributes = null;
 
     public protected(set) ?string $fax = null;
@@ -44,6 +47,7 @@ class CustomerAddress
 
     public protected(set) ?int $region_id = null;
 
+    /** @var string[] */
     public protected(set) ?array $street = null;
 
     public protected(set) ?string $suffix = null;
@@ -61,28 +65,28 @@ class CustomerAddress
         if (isset($data['company'])) {
             $instance->company = $data['company'];
         }
-        if (isset($data['country_code']) && $data['country_code'] !== null) {
+        if (isset($data['country_code'])) {
             $instance->country_code = $data['country_code'];
         }
-        if (isset($data['country_id']) && $data['country_id'] !== null) {
+        if (isset($data['country_id'])) {
             $instance->country_id = $data['country_id'];
         }
-        if (isset($data['custom_attributes']) && $data['custom_attributes'] !== null) {
+        if (isset($data['custom_attributes'])) {
             $instance->custom_attributes = array_map(CustomerAddressAttribute::fromArray(...), $data['custom_attributes']);
         }
-        if (isset($data['custom_attributesV2']) && $data['custom_attributesV2'] !== null) {
+        if (isset($data['custom_attributesV2'])) {
             $instance->custom_attributesV2 = $data['custom_attributesV2'];
         }
-        if (isset($data['customer_id']) && $data['customer_id'] !== null) {
+        if (isset($data['customer_id'])) {
             $instance->customer_id = $data['customer_id'];
         }
-        if (isset($data['default_billing']) && $data['default_billing'] !== null) {
+        if (isset($data['default_billing'])) {
             $instance->default_billing = $data['default_billing'];
         }
-        if (isset($data['default_shipping']) && $data['default_shipping'] !== null) {
+        if (isset($data['default_shipping'])) {
             $instance->default_shipping = $data['default_shipping'];
         }
-        if (isset($data['extension_attributes']) && $data['extension_attributes'] !== null) {
+        if (isset($data['extension_attributes'])) {
             $instance->extension_attributes = array_map(CustomerAddressAttribute::fromArray(...), $data['extension_attributes']);
         }
         if (isset($data['fax'])) {
@@ -157,7 +161,7 @@ class CustomerAddress
             $data['country_id'] = $this->country_id;
         }
         if ($this->custom_attributes !== null) {
-            $data['custom_attributes'] = array_map(fn ($item) => $item->asArray(), $this->custom_attributes);
+            $data['custom_attributes'] = array_map(fn (CustomerAddressAttribute $item) => $item->asArray(), $this->custom_attributes);
         }
         if ($this->custom_attributesV2 !== null) {
             $data['custom_attributesV2'] = $this->custom_attributesV2;
@@ -172,7 +176,7 @@ class CustomerAddress
             $data['default_shipping'] = $this->default_shipping;
         }
         if ($this->extension_attributes !== null) {
-            $data['extension_attributes'] = array_map(fn ($item) => $item->asArray(), $this->extension_attributes);
+            $data['extension_attributes'] = array_map(fn (CustomerAddressAttribute $item) => $item->asArray(), $this->extension_attributes);
         }
         if ($this->fax !== null) {
             $data['fax'] = $this->fax;
