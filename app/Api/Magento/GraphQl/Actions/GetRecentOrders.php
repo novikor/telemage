@@ -10,29 +10,34 @@ use App\Api\Magento\GraphQl\Schema\Queries\CustomerOrdersArgumentsObject;
 use App\Api\Magento\GraphQl\Schema\Queries\RootQueryObject;
 use App\Models\TelegramUser;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Collection;
 
-class GetOrders extends GraphQlAction
+class GetRecentOrders extends GraphQlAction
 {
     /**
-     * @throws ApiException
+     * @return Collection<CustomerOrder>
+     *
      * @throws ConnectionException
+     * @throws ApiException
      */
-    public function __invoke(TelegramUser $user, int $limit = 5): void
+    public function __invoke(TelegramUser $user, int $limit = 5): Collection
     {
         $queryRoot = new RootQueryObject;
         $orders = $queryRoot->selectCustomer()
             ->selectOrders(new CustomerOrdersArgumentsObject()->setPageSize($limit))
             ->selectItems()
+            ->selectStatus()
             ->selectOrderNumber()
-            ->selectOrderDate()
-            ->selectGrandTotal();
+            ->selectOrderDate();
+        $orders->selectTotal()->selectGrandTotal()
+            ->selectCurrency()->selectValue();
         $orders->selectItems()
             ->selectQuantityOrdered()
             ->selectProductName()
             ->selectProductSalePrice()->selectCurrency()->selectValue();
 
         $ordersData = $this->query($user, $queryRoot->getQuery())->json('data.customer.orders.items');
-        $orders = array_map(CustomerOrder::fromArray(...), $ordersData);
-        dd($orders);
+
+        return collect(array_map(CustomerOrder::fromArray(...), $ordersData));
     }
 }

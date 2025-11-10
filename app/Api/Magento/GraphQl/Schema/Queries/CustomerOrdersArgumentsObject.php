@@ -9,7 +9,7 @@ use GraphQL\SchemaObject\ArgumentsObject;
 
 class CustomerOrdersArgumentsObject extends ArgumentsObject
 {
-    protected $filter;
+    protected ?CustomerOrdersFilterInputInputObject $filter = null;
 
     protected $currentPage;
 
