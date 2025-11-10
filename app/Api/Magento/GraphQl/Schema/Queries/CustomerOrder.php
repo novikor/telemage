@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
+use InvalidArgumentException;
 
 class CustomerOrder
 {
@@ -48,7 +50,7 @@ class CustomerOrder
 
     public protected(set) ?string $number = null;
 
-    public protected(set) ?string $order_date = null;
+    public protected(set) ?Carbon $order_date = null;
 
     public protected(set) ?string $order_number = null;
 
@@ -89,7 +91,7 @@ class CustomerOrder
             $instance->comments = array_map(SalesCommentItem::fromArray(...), $data['comments']);
         }
         if (isset($data['created_at'])) {
-            $instance->created_at = new Carbon($data['created_at']);
+            $instance->created_at = Date::create($data['created_at']);
         }
         if (isset($data['credit_memos'])) {
             $instance->credit_memos = array_map(CreditMemo::fromArray(...), $data['credit_memos']);
@@ -125,7 +127,7 @@ class CustomerOrder
             $instance->number = $data['number'];
         }
         if (isset($data['order_date'])) {
-            $instance->order_date = $data['order_date'];
+            $instance->order_date = Date::create($data['order_date']);
         }
         if (isset($data['order_number'])) {
             $instance->order_number = $data['order_number'];
@@ -162,7 +164,7 @@ class CustomerOrder
     {
         $data = json_decode($json, true);
         if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
+            throw new InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
         }
 
         return self::fromArray($data);
@@ -225,7 +227,7 @@ class CustomerOrder
         if ($this->number !== null) {
             $data['number'] = $this->number;
         }
-        if ($this->order_date !== null) {
+        if ($this->order_date instanceof Carbon) {
             $data['order_date'] = $this->order_date;
         }
         if ($this->order_number !== null) {
