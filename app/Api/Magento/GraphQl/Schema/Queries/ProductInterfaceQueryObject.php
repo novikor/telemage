@@ -10,6 +10,13 @@ class ProductInterfaceQueryObject extends QueryObject
 {
     const OBJECT_NAME = 'ProductInterface';
 
+    public function selectUid(): self
+    {
+        $this->selectField('uid');
+
+        return $this;
+    }
+
     public function selectId(): self
     {
         $this->selectField('id');

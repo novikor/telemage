@@ -10,7 +10,7 @@ class OrderAddress
 
     public protected(set) ?string $company = null;
 
-    public protected(set) ?CountryCodeEnumEnumObject $country_code = null;
+    public protected(set) ?CountryCodeEnum $country_code = null;
 
     public protected(set) ?string $fax = null;
 
@@ -47,7 +47,7 @@ class OrderAddress
             $instance->company = $data['company'];
         }
         if (isset($data['country_code'])) {
-            $instance->country_code = $data['country_code'];
+            $instance->country_code = CountryCodeEnum::from($data['country_code']);
         }
         if (isset($data['fax'])) {
             $instance->fax = $data['fax'];
@@ -111,7 +111,7 @@ class OrderAddress
         if ($this->company !== null) {
             $data['company'] = $this->company;
         }
-        if ($this->country_code instanceof CountryCodeEnumEnumObject) {
+        if ($this->country_code instanceof CountryCodeEnum) {
             $data['country_code'] = $this->country_code;
         }
         if ($this->fax !== null) {

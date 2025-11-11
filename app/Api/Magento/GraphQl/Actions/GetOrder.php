@@ -23,21 +23,45 @@ class GetOrder extends GraphQlAction
     {
         $queryRoot = new RootQueryObject;
         $orders = $queryRoot->selectCustomer()
-            ->selectOrders(new CustomerOrdersArgumentsObject()->setFilter(
-                new CustomerOrdersFilterInputInputObject()->setNumber(
-                    new FilterStringTypeInputInputObject()->setEq($orderNumber)
+            ->selectOrders(
+                new CustomerOrdersArgumentsObject()->setFilter(
+                    new CustomerOrdersFilterInputInputObject()->setNumber(
+                        new FilterStringTypeInputInputObject()->setEq($orderNumber)
+                    )
                 )
-            ))
+            )
             ->selectItems()
             ->selectStatus()
             ->selectOrderNumber()
             ->selectOrderDate();
-        $orders->selectTotal()->selectGrandTotal()
+        $totals = $orders->selectTotal();
+        $totals->selectGrandTotal()
+            ->selectCurrency()->selectValue();
+        $totals->selectShippingHandling()->selectTotalAmount()
             ->selectCurrency()->selectValue();
         $orders->selectItems()
             ->selectQuantityOrdered()
             ->selectProductName()
+            ->selectProductSku()
             ->selectProductSalePrice()->selectCurrency()->selectValue();
+        $orders->selectPaymentMethods()->selectName();
+        $orders->selectShippingMethod();
+        $orders->selectBillingAddress()
+            ->selectFirstname()
+            ->selectLastname()
+            ->selectStreet()
+            ->selectCity()
+            ->selectCountryCode()
+            ->selectPostcode()
+            ->selectRegion();
+        $orders->selectShippingAddress()
+            ->selectFirstname()
+            ->selectLastname()
+            ->selectStreet()
+            ->selectCity()
+            ->selectCountryCode()
+            ->selectPostcode()
+            ->selectRegion();
 
         $order = $this->query($user, $queryRoot->getQuery())->json('data.customer.orders.items.0');
         if ($order === null) {

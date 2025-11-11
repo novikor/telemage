@@ -45,7 +45,7 @@ class CustomerOrder
 
     public protected(set) ?bool $is_virtual = null;
 
-    /** @var mixed[] */
+    /** @var OrderItem[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?string $number = null;

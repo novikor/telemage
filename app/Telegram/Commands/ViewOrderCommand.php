@@ -36,7 +36,7 @@ class ViewOrderCommand
             parse_mode: ParseMode::HTML,
             reply_markup: InlineKeyboardMarkup::make()
                 ->addRow(
-                    InlineKeyboardButton::make('Reorder', callback_data: "reorder $orderNumber"),
+                    InlineKeyboardButton::make('Add items and address from this order to cart', callback_data: "reorder $orderNumber"),
                 )
 
         );

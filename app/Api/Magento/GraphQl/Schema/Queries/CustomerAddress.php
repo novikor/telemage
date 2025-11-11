@@ -10,7 +10,7 @@ class CustomerAddress
 
     public protected(set) ?string $company = null;
 
-    public protected(set) ?CountryCodeEnumEnumObject $country_code = null;
+    public protected(set) ?CountryCodeEnum $country_code = null;
 
     public protected(set) ?string $country_id = null;
 
@@ -66,7 +66,7 @@ class CustomerAddress
             $instance->company = $data['company'];
         }
         if (isset($data['country_code'])) {
-            $instance->country_code = $data['country_code'];
+            $instance->country_code = CountryCodeEnum::from($data['country_code']);
         }
         if (isset($data['country_id'])) {
             $instance->country_id = $data['country_id'];
@@ -154,7 +154,7 @@ class CustomerAddress
         if ($this->company !== null) {
             $data['company'] = $this->company;
         }
-        if ($this->country_code instanceof CountryCodeEnumEnumObject) {
+        if ($this->country_code instanceof CountryCodeEnum) {
             $data['country_code'] = $this->country_code;
         }
         if ($this->country_id !== null) {

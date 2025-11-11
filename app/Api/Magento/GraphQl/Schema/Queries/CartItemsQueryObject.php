@@ -10,6 +10,14 @@ class CartItemsQueryObject extends QueryObject
 {
     const OBJECT_NAME = 'CartItems';
 
+    public function selectItems(): CartItemInterfaceQueryObject
+    {
+        $object = new CartItemInterfaceQueryObject('items');
+        $this->selectField($object);
+
+        return $object;
+    }
+
     public function selectPageInfo(?CartItemsPageInfoArgumentsObject $argsObject = null): SearchResultPageInfoQueryObject
     {
         $object = new SearchResultPageInfoQueryObject('page_info');
