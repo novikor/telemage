@@ -13,6 +13,7 @@ use App\Api\Magento\GraphQl\Actions\SetShippingMethodsOnCart;
 use App\Api\Magento\GraphQl\Schema\Queries\Cart;
 use App\Api\Magento\GraphQl\Schema\Queries\SelectedPaymentMethod;
 use App\Telegram\Commands\Traits\ExtractsRequestData;
+use App\Telegram\Exceptions\UserSafeException;
 use Illuminate\Http\Client\ConnectionException;
 use Psr\SimpleCache\InvalidArgumentException;
 use SergiX44\Nutgram\Conversations\InlineMenu;
@@ -44,21 +45,15 @@ class CheckoutCartCommand extends InlineMenu
     public function start(Nutgram $bot): void
     {
         $cart = $bot->get('cart') ?: $this->getCart($bot);
-        $this->renderCartAndMenu($bot, $cart);
+        $this->renderCartAndMenu($cart);
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    private function renderCartAndMenu(Nutgram $bot, Cart $cart): void
+    private function renderCartAndMenu(Cart $cart): void
     {
         $this->clearButtons();
-        if ($cart->total_quantity === 0.0) {
-            $bot->sendMessage('Your shipping cart is empty.');
-            $this->end();
-
-            return;
-        }
         $this->menuText(view('telegram.cart-details', ['cart' => $cart])->render(), [
             'parse_mode' => ParseMode::HTML,
         ]);
@@ -83,6 +78,7 @@ class CheckoutCartCommand extends InlineMenu
      */
     public function showShippingMethods(Nutgram $bot): void
     {
+        $bot->answerCallbackQuery();
         $this->clearButtons();
         $cart = $this->getCart($bot);
         $methods = $cart->shipping_addresses[0]->available_shipping_methods;
@@ -110,7 +106,8 @@ class CheckoutCartCommand extends InlineMenu
         [$carrierCode, $methodCode] = explode('|', $bot->callbackQuery()->data);
         $cart = $this->getCart($bot);
         $cart = ($this->setShippingMethodsOnCart)($this->getTelegramUser($bot), $cart->id, $carrierCode, $methodCode);
-        $this->renderCartAndMenu($bot, $cart);
+        $bot->answerCallbackQuery(text: 'Shipping method has been saved.');
+        $this->renderCartAndMenu($cart);
     }
 
     /**
@@ -120,6 +117,7 @@ class CheckoutCartCommand extends InlineMenu
      */
     public function showPaymentMethods(Nutgram $bot): void
     {
+        $bot->answerCallbackQuery();
         $this->clearButtons();
         $cart = $this->getCart($bot);
         $methods = $cart->available_payment_methods;
@@ -144,7 +142,8 @@ class CheckoutCartCommand extends InlineMenu
             cartId: $cart->id,
             paymentMethodCode: $code
         );
-        $this->renderCartAndMenu($bot, $cart);
+        $bot->answerCallbackQuery(text: 'Payment method has been saved.');
+        $this->renderCartAndMenu($cart);
     }
 
     /**
@@ -158,7 +157,7 @@ class CheckoutCartCommand extends InlineMenu
         $bot->answerCallbackQuery(text: 'Your cart has been cleared.');
 
         //        $this->next('start');
-        $this->renderCartAndMenu($bot, $this->getCart($bot));
+        $this->renderCartAndMenu($this->getCart($bot));
     }
 
     public function placeOrder(Nutgram $bot): void
@@ -173,9 +172,17 @@ class CheckoutCartCommand extends InlineMenu
     /**
      * @throws ApiException
      * @throws ConnectionException
+     * @throws InvalidArgumentException
+     * @throws UserSafeException
      */
     private function getCart(Nutgram $bot): Cart
     {
-        return ($this->getCustomerCart)($this->getTelegramUser($bot));
+        $cart = ($this->getCustomerCart)($this->getTelegramUser($bot));
+        if ($cart->total_quantity === 0.0) {
+            $this->end();
+            throw new UserSafeException('Your shopping cart is empty.');
+        }
+
+        return $cart;
     }
 }
