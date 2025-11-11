@@ -162,9 +162,9 @@ class CheckoutCartCommand extends InlineMenu
 
     public function placeOrder(Nutgram $bot): void
     {
+        $bot->answerCallbackQuery(text: 'Placing your order...');
         $cart = $this->getCart($bot);
         $orderNumber = ($this->placeOrder)($this->getTelegramUser($bot), $cart->id);
-        $bot->answerCallbackQuery("Your order #$orderNumber has been placed!");
         $this->end();
         app()->call(ViewOrderCommand::class, ['bot' => $bot, 'orderNumber' => $orderNumber]);
     }
