@@ -9,7 +9,7 @@
 
 @foreach ($orders as $order)
     <b>Order</b> <u>#{{ $order->order_number }}</u>
-    <i>Placed on:</i> {{ $order->order_date->format('M d, Y') }}
+    <i>Placed:</i> {{ $order->order_date->isToday() ? $order->order_date->fromNow() : $order->order_date->format('M d, Y')}}
     <i>Total:</i> {{ $order->total->grand_total->currency }}{{ $order->total->grand_total->value }}
     <i>Status:</i> {{ $order->status }}
 @endforeach
