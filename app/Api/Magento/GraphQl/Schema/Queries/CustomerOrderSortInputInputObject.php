@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
-use GraphQL\SchemaObject\InputObject;
+use App\Api\Magento\GraphQl\Schema\EnumInput;
 
-class CustomerOrderSortInputInputObject extends InputObject
+class CustomerOrderSortInputInputObject extends EnumInput
 {
-    protected $sort_direction;
+    protected ?SortDirectionEnum $sort_direction = null;
 
-    protected $sort_field;
+    protected ?CustomerOrderSortableFieldEnum $sort_field = null;
 
-    public function setSortDirection($sortDirection): static
+    public function setSortDirection(SortDirectionEnum $sortDirection): static
     {
         $this->sort_direction = $sortDirection;
 
         return $this;
     }
 
-    public function setSortField($sortField): static
+    public function setSortField(CustomerOrderSortableFieldEnum $sortField): static
     {
         $this->sort_field = $sortField;
 

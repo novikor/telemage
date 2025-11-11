@@ -12,6 +12,6 @@ parameters:
 #
     excludePaths:
         - ./tests/**.php
-        - app/Api/Magento/Data/GraphQl/Queries/**.php
+        - app/Api/Magento/GraphQl/Schema/Queries/**.php
 #
 #    checkMissingIterableValueType: false

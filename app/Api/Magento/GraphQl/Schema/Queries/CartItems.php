@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Api\Magento\GraphQl\Schema\Queries;
 
+use InvalidArgumentException;
+
 class CartItems
 {
-    /** @var mixed[] */
+    /** @var CartItemInterface[] */
     public protected(set) ?array $items = null;
 
     public protected(set) ?SearchResultPageInfo $page_info = null;
@@ -17,7 +19,7 @@ class CartItems
     {
         $instance = new self;
         if (isset($data['items'])) {
-            $instance->items = $data['items'];
+            $instance->items = array_map(CartItemInterface::fromArray(...), $data['items']);
         }
         if (isset($data['page_info'])) {
             $instance->page_info = SearchResultPageInfo::fromArray($data['page_info']);
@@ -33,7 +35,7 @@ class CartItems
     {
         $data = json_decode($json, true);
         if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
+            throw new InvalidArgumentException('Invalid JSON provided to fromJson method: '.json_last_error_msg());
         }
 
         return self::fromArray($data);

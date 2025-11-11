@@ -7,7 +7,10 @@ namespace App\Api\Magento\GraphQl\Actions;
 use App\Api\ApiException;
 use App\Api\Magento\GraphQl\Schema\Queries\CustomerOrder;
 use App\Api\Magento\GraphQl\Schema\Queries\CustomerOrdersArgumentsObject;
+use App\Api\Magento\GraphQl\Schema\Queries\CustomerOrderSortableFieldEnum;
+use App\Api\Magento\GraphQl\Schema\Queries\CustomerOrderSortInputInputObject;
 use App\Api\Magento\GraphQl\Schema\Queries\RootQueryObject;
+use App\Api\Magento\GraphQl\Schema\Queries\SortDirectionEnum;
 use App\Models\TelegramUser;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Collection;
@@ -24,7 +27,15 @@ class GetRecentOrders extends GraphQlAction
     {
         $queryRoot = new RootQueryObject;
         $orders = $queryRoot->selectCustomer()
-            ->selectOrders(new CustomerOrdersArgumentsObject()->setPageSize($limit))
+            ->selectOrders(
+                new CustomerOrdersArgumentsObject()
+                    ->setPageSize($limit)
+                    ->setSort(
+                        new CustomerOrderSortInputInputObject()
+                            ->setSortField(CustomerOrderSortableFieldEnum::CREATED_AT)
+                            ->setSortDirection(SortDirectionEnum::DESC)
+                    )
+            )
             ->selectItems()
             ->selectStatus()
             ->selectOrderNumber()

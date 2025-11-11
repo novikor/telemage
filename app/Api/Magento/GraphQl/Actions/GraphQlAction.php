@@ -41,7 +41,9 @@ abstract class GraphQlAction
                 ->throw();
         } catch (RequestException  $e) {
             Log::error($e->__toString(), ['user' => $user->id]);
-            throw new ApiException($e->response->json('errors', $e->getMessage()), 0, $e);
+            $errors = $e->response->json('errors');
+            $message = is_array($errors) ? collect($errors)->pluck('message')->join('; ') : $e->getMessage();
+            throw new ApiException($message, 0, $e);
         }
     }
 }
