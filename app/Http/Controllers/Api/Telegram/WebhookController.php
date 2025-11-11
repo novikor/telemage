@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Telegram;
 
 use App\Http\Controllers\Controller;
 use App\Services\TelegramBotApiService;
+use App\Telegram\Exceptions\UserSafeException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,11 @@ class WebhookController extends Controller
         $bot = $botApiService->initializeBotInstance($token);
         try {
             $bot->run();
+
+            return response()->noContent();
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (UserSafeException $e) {
+            $bot->sendMessage($e->getMessage());
 
             return response()->noContent();
         } catch (Throwable $e) {
