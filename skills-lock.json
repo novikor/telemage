@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "warden-dev": {
+      "source": "lbajsarowicz/ai-skills-warden",
+      "sourceType": "github",
+      "computedHash": "f5b690aa1b27ff8b5bdfdc0e0323cca1dfb37f2a2c71e12e10a96ae5e79c0e87"
+    }
+  }
+}

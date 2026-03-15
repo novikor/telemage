@@ -37,4 +37,4 @@ grumphp:
       use_grumphp_paths: true
     shell:
       scripts:
-        - [ "-c", "./vendor/bin/sail test --stop-on-failure" ]
+        - ["-c", "warden shell -c './artisan test --stop-on-failure'" ]

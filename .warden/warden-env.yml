@@ -1,0 +1,5 @@
+version: '3.5'
+services:
+  php-fpm:
+    external_links:
+      - traefik:warden.demo.test

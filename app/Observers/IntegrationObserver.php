@@ -42,7 +42,7 @@ readonly class IntegrationObserver
         ) {
             // TODO: extract into action or service
             try {
-                $bot = $this->botApiService->initializeBotInstance($integration->bot_token);
+                $bot = $this->botApiService->initializeBotInstance($integration->webhook_token);
 
                 // Generate the full, secure webhook URL using our named route
                 $webhookUrl = route('telegram.webhook', ['token' => $integration->webhook_token]);
