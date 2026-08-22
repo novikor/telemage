@@ -31,7 +31,9 @@ class TelegramBotApiService
                 logger: Log::channel('telegram_api_debug')
             ),
         ]);
-        $bot->setRunningMode(Webhook::class);
+        $webhook = new Webhook(secretToken: $integration->webhook_secret_token);
+        $webhook->setSafeMode(true);
+        $bot->setRunningMode($webhook);
         $bot->set('integration', $integration);
 
         return $bot;

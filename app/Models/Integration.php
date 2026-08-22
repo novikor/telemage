@@ -53,6 +53,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Integration withoutTrashed()
  *
  * @property string|null $webhook_token
+ * @property string|null $webhook_secret_token
  * @property bool $webhook_is_configured
  *
  * @method static Builder<static>|Integration whereWebhookIsConfigured($value)
@@ -86,6 +87,7 @@ class Integration extends Model
         return [
             'jwe_secret' => 'encrypted',
             'bot_token' => 'encrypted',
+            'webhook_secret_token' => 'encrypted',
             'webhook_is_configured' => 'boolean',
         ];
     }

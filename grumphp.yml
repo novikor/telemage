@@ -1,4 +1,9 @@
 grumphp:
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: 'PATH=$PATH:/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin warden env exec -T php-fpm sh -c ''exec "$0" "$@" --ansi'''
+  environment:
+    variables:
+      FORCE_COLOR: "1"
   extensions:
     - YieldStudio\GrumPHPLaravelPint\ExtensionLoader
   fixer:
@@ -37,4 +42,4 @@ grumphp:
       use_grumphp_paths: true
     shell:
       scripts:
-        - ["-c", "warden shell -c './artisan test --stop-on-failure'" ]
+        - ["-c", "./artisan test --stop-on-failure" ]

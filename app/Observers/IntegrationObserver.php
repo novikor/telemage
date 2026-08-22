@@ -26,6 +26,10 @@ readonly class IntegrationObserver
         if (empty($integration->webhook_token)) {
             $integration->webhook_token = Str::ulid()->toString();
         }
+
+        if (empty($integration->webhook_secret_token)) {
+            $integration->webhook_secret_token = Str::random(64);
+        }
     }
 
     /**
@@ -51,7 +55,7 @@ readonly class IntegrationObserver
                 }
 
                 // Set the webhook with Telegram
-                $bot->setWebhook($webhookUrl);
+                $bot->setWebhook($webhookUrl, secret_token: $integration->webhook_secret_token);
                 $bot->registerMyCommands();
 
                 // Update the status (use saveQuietly to avoid firing 'saved' event again)
