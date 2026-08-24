@@ -26,11 +26,11 @@ readonly class CustomerTokenService
      */
     public function getCustomerToken(TelegramUser $user): string
     {
-        $jwe = $this->jweService->generateForCustomer($user->integration, $user->customer_id);
         $cacheKey = sprintf('%s_%d', $user->integration->webhook_token, $user->customer_id);
         if ($cachedToken = $this->getCachedToken($cacheKey)) {
             return $cachedToken;
         }
+        $jwe = $this->jweService->generateForCustomer($user->integration, $user->customer_id);
         $newToken = ($this->getCustomerTokenByJWE)($user->integration, $jwe);
         $this->cacheToken($cacheKey, $newToken);
 
