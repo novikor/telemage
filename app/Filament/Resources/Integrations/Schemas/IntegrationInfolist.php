@@ -26,9 +26,18 @@ class IntegrationInfolist
                 ]),
                 Section::make('API')->schema([
                     IconEntry::make('webhook_is_configured')->boolean()->label(fn ($state) => $state ? 'Webhook is configured' : 'Webhook is not configured'),
-                    TextEntry::make('webhook_token')->label('Webhook URL Token')->copyable()->copyMessage('Copied!'),
-                    TextEntry::make('jwe_secret')->label('JWE Secret')->copyable()->copyMessage('Copied!'),
+                    self::secret('webhook_token')->label('Webhook URL Token'),
+                    self::secret('jwe_secret')->label('JWE Secret'),
                 ]),
             ]);
+    }
+
+    private static function secret(string $name): TextEntry
+    {
+        return TextEntry::make($name)
+            ->formatStateUsing(fn (?string $state): string => $state ? str_repeat('•', mb_strlen($state)) : '—')
+            ->copyableState(fn (?string $state): ?string => $state)
+            ->copyable(fn (?string $state): bool => (bool) $state)
+            ->copyMessage('Copied!');
     }
 }
